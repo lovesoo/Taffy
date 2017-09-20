@@ -1,0 +1,9 @@
+nose==1.3.7
+redis_py_cluster==1.3.4
+requests==2.18.4
+redis==2.10.6
+pymssql==2.1.3
+pycrypto==2.6.1
+DBUtils==1.2
+rediscluster==0.5.3
+suds_jurko==0.6
