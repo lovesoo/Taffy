@@ -16,8 +16,12 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
 基本用法可以参考Tests/test_demo.py.
 
+## 1. 运行环境
+- macOS，linux，windows
+- nose 1.3.7
+- python 2.7
 
-## 1. 结构介绍
+## 2. 结构介绍
 1) config 配置文件
 2) Tests 测试用例
 3) Util 工具类
@@ -31,7 +35,7 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
     - securityTool  数据加解密
     - webserviceTool    webservice接口调用
 
-## 2. 使用方法
+## 3. 使用方法
 1) IDE
 
     推荐使用PyCharm: http://www.jetbrains.com/pycharm/
@@ -48,26 +52,25 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
 3) PyCharm配置
 
-    1) 「File」–>「open」，打开Proejct taffy
+    1) 「File」–>「open」，打开taffy
 
     2) 「File」–>「Settings」–>「Tools」->「Python Integrated Tools」，Default test runner 选择Nosetests后保存
 
     3) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
 
-    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，Python interpreter为当前python版本安装目录，并在Interpreter options中填写-s显示输出
+    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
-4) PyCharm使用
+4) 执行测试用例
 
     1) 选中Tests/test_demo.py
 
     2) 鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试用例
 
-    3) 快捷键Ctrl+Shift+F10
+    3) 也可使用快捷键Ctrl+Shift+F10
 
-    4) 在脚本中使用快捷键Ctrl+Shift+F10，可以单独执行选中的test class下的一个test func
+    4) 在脚本中使用快捷键Ctrl+Shift+F10，会单独执行选中的test class下的一个test func
 
-
-## 3.参考资料
+## 4.参考资料
 
     1. http://nose.readthedocs.io/en/latest/index.html
 
@@ -76,6 +79,6 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
     3. http://cn.python-requests.org/zh_CN/latest/
 
 
-## 4.联系
+## 5.联络方式
 
     lovesoo@qq.com
