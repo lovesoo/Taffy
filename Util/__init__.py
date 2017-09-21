@@ -8,4 +8,5 @@ from httpTool import *
 from OATool import *
 from redisTool import *
 from securityTool import *
+from seleniumTool import *
 from webserviceTool import *

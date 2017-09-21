@@ -10,7 +10,7 @@ The basic useage can be found at Tests/test_demo.py.
 
 Taffy是基于nosetests的自动化测试框架.
 
-Taffy主要用来测试后台服务接口(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型)，也可以集成Selinum, Appium进行Web或APP的自动化测试。
+Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selinum, Appium进行WEB或APP的自动化测试。
 
 Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解密等接口。
 
@@ -33,6 +33,7 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
     - OATool    正交表设计测试用例
     - redisTool redis操作（支持redis及redis cluster）
     - securityTool  数据加解密
+    - seleniumTool  selenium PageObject对象封装
     - webserviceTool    webservice接口调用
 
 ## 3. 使用方法
@@ -109,6 +110,7 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
     2. https://docs.python.org/dev/library/unittest.html
 
+    3. http://www.cnblogs.com/yufeihlf/p/5764099.html
 
 
 ## 5.联络方式
