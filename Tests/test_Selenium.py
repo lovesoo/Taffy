@@ -15,7 +15,7 @@ class test_login(object):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(20)
+        self.driver.implicitly_wait(30)
         self.url = "http://mail.126.com"
         self.suffix = '@126.com'
         self.user = "tafffy"
