@@ -15,7 +15,7 @@ class test_login(object):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(20)
         self.url = "http://mail.126.com"
         self.suffix = '@126.com'
         self.user = "tafffy"
@@ -53,12 +53,15 @@ class test_login(object):
             print 'Login Failed: %s' % fail_tips
             if tips:
                 # 登陆失败提示信息校验
-                assert tips == fail_tips, 'Check Login Error Tips Failed!%s'
+                assert tips == fail_tips, 'Check Login Error Tips Failed!'
+            else:
+                # 登陆失败
+                assert False, 'Check UserID Failed!'
         else:
-            # 登陆成功用户名校验
+            # 登陆成功校验UserID
             login_userID = login_page.show_userid()
-            print 'Login Success.UserID: %s' % login_userID
-            assert user + self.suffix == login_userID, 'Check Login UserID Failed!'
+            print 'Login UserID: %s' % login_userID
+            assert user + self.suffix == login_userID, 'Check UserID Failed!'
 
     def test_BVT(self):
         # 测试用例：用户登陆成功
