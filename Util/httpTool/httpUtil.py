@@ -58,7 +58,7 @@ class HttpUtil(object):
         return response
 
     @classmethod
-    def post(cls, name, confSection, confFile='/config/test.conf', **kwargs):
+    def post(cls, name, confSection='Http', confFile='/config/test.conf', **kwargs):
         """http post methode
         :param params: 接口queryString
         :type params: dict
@@ -89,7 +89,31 @@ class BaiduHttpUtil(object):
     @classmethod
     def get(cls, name, srequest):
         params = srequest.GetDict()
-        print 'Request:\t', json.dumps(params,ensure_ascii=False)
+        print 'Request:\t', json.dumps(params, ensure_ascii=False)
         response = HttpUtil.get(name, params=params)
         print 'Response:\t', response
         return response.text
+
+
+class HttpbinUtil(object):
+    """httpbin通用调用类"""
+    confSection = 'Httpbin'
+
+    def __init__(self, ):
+        pass
+
+    @classmethod
+    def get(cls, name, srequest):
+        params = srequest.GetDict()
+        print 'Request:\t', json.dumps(params, ensure_ascii=False)
+        response = HttpUtil.get(name, cls.confSection, params=params)
+        print 'Response:\t', response.text
+        return response.json()
+
+    @classmethod
+    def post(cls, name, srequest):
+        params = srequest.GetDict()
+        print 'Request:\t', json.dumps(params, ensure_ascii=False)
+        response = HttpUtil.post(name, cls.confSection, data=params)
+        print 'Response:\t', response.text
+        return response.json()

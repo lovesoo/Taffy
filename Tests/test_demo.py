@@ -21,9 +21,9 @@ class test_demo(object):
         sres = BaiduHttpUtil.get(name, sreq)
 
         # 检查百度搜索返回页面标题
-        check_response.check_title(sres, wd)
+        resultCheck_baidu.check_title(sres, wd)
         # 检查百度页面返回内容
-        check_response.check_results(sres, wd)
+        resultCheck_baidu.check_results(sres, wd)
 
     def test_http(self):
         # http接口调用demo
@@ -34,6 +34,22 @@ class test_demo(object):
             f = partial(test_demo.baidu, wd)
             f.description = 'search: %s' % wd
             yield (f,)
+
+    def test_httpbin_get(self):
+        # httpbin.org接口测试demo
+        # get请求
+        name = 'get'
+        sreq = HttpbinParam(name='Taffy', description='Taffy is a Test Automation Framework based on nosetests')
+        sres = HttpbinUtil.get(name, sreq)
+        resultCheck_httpbin.check_get(sres, sreq)
+
+    def test_httpbin_post(self):
+        # httpbin.org接口测试demo
+        # post请求
+        name = 'post'
+        sreq = HttpbinParam(name='Taffy', description='Taffy is a Test Automation Framework based on nosetests')
+        sres = HttpbinUtil.post(name, sreq)
+        resultCheck_httpbin.check_post(sres, sreq)
 
     @nottest
     def test_hessian(self):
