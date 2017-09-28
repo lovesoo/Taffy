@@ -6,15 +6,20 @@ Taffy is usesd mainly to test interface including Http, dubbo/hessian, Webservic
 
 Taffy also provided encapsulation and realized the interfaces of data check, config read, DB / redis operations, data encryption / decryption and etc.
 
-The basic useage can be found at Tests/test_demo.py.
+The basic useage can be found at Tests/ folder.
 
-Taffy是基于nosetests的自动化测试框架.
+Taffy是基于nosetests的自动化测试框架。
 
-Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selinum, Appium进行WEB或APP的自动化测试。
+Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selinum, Appium进行WEB或APP的自动化测试，或集成locust进行性能测试。
 
 Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解密等接口。
 
-基本用法可以参考Tests/test_demo.py.
+基本用法可以参考[Tests/目录](https://github.com/lovesoo/Taffy/tree/master/Tests)下示例demo.
+
+QQ交流群：25452556
+
+## 0. 最近更新
+2017-09-28 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
 ## 1. 运行环境
 - macOS，linux，windows
@@ -30,6 +35,7 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
     - DBTool    数据库操作(mysql,sqlserver)
     - hessianTool   hessian接口调用
     - httpTool  http接口调用
+    - locustTool    locust性能框架
     - OATool    正交表设计测试用例
     - redisTool redis操作（支持redis及redis cluster）
     - securityTool  数据加解密
@@ -108,11 +114,13 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
     1) 「File」–>「open」，打开下载的项目taffy
 
-    2) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
+    2) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，Default test runner选择Nosetests
 
-    3)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
+    3) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
 
-2) 执行测试用例
+    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
+
+2) 执行功能测试用例
 
     1) 选中Tests/test_demo.py
 
@@ -122,13 +130,29 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
         注：在脚本中使用快捷键Ctrl+Shift+F10，会单独执行选中的test class下的一个test func
 
+3) 执行性能测试用例
+
+    1) 配置config/locust.yml
+
+    2) 运行test_locust.py生成locustfile及执行性能测试，命令如下：
+
+    ```
+    $ cd Taffy\Tests
+    $ python test_locust.py
+    ```
+
+    locust框架集成使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+
+
 ## 5.参考资料
 
     1. http://nose.readthedocs.io/en/latest/index.html
 
     2. https://docs.python.org/dev/library/unittest.html
 
-    3. http://www.cnblogs.com/yufeihlf/p/5764099.html
+    3. https://docs.locust.io/en/latest/
+
+    4. http://www.cnblogs.com/yufeihlf/p/5764099.html
 
 
 ## 6.联络方式
@@ -137,7 +161,86 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
 ## 7. 附录
 
-### 7.1 nose编写测试用例方法
+### 7.1 locust框架集成使用说明
+#### 7.1.1.Locust简介
+Locust是使用Python语言编写实现的开源性能测试工具，简洁、轻量、高效，并发机制基于gevent协程，可以实现单机模拟生成较高的并发压力。
+
+官网：https://locust.io/
+
+主要特点如下：
+1. 使用普通的Python脚本用户测试场景
+2. 分布式和可扩展，支持成千上万的用户
+3. 基于Web的用户界面，用户可以实时监控脚本运行状态
+4. 几乎可以测试任何系统，除了web http接口外，还可自定义clients测试其他类型系统
+
+
+#### 7.1.2. 安装
+使用pip或easy_install，可以方便安装Locust
+
+```
+pip install locustio
+```
+
+#### 7.1.3.taffy集成使用方法
+taffy集成locust的基本流程如下：
+1) 配置config/locust.yml
+
+    YAML是对人友好的数据序列化标准，可适用所有的编程语言。
+    与json相互在线转换网站：https://www.json2yaml.com/
+
+    locust.yml主要配置项如下：
+
+    a) mode为运行模式配置：为0使用普通模式，运行后需要打开http://localhost:8089/，手工填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，需要配置csv,c,r,run_time参数
+
+    b) task为测试任务配置：必填项为file,class,function分别代表测试文件，类及方法；可选项为weight,min_wait及max_wait（默认值分别为1,1000,5000）
+
+
+```
+---
+#mode 运行模式 0 普通模式; 1 no-web模式，此时csv,c,r,run_time参数才有效
+#csv 运行结果文件名
+#c 并发用户数
+#r 每秒请求数
+#run_time 运行时间
+mode: 1
+csv: locust
+c: 10
+r: 2
+run_time: 5m
+
+#task 性能测试任务
+task:
+-
+  #file 测试文件
+  #class 测试类
+  #function 测试方法
+  #weight 任务选择的概率权重
+  #min_wait 任务执行之间的最小等待时间，单位ms
+  #max_wait 任务执行之间的最大等待时间，单位ms
+  file: test_demo.py
+  class: test_demo
+  function: test_httpbin_get
+  weight: 2
+  min_wait: 1000
+  max_wait: 2000
+- file: test_demo.py
+  class: test_demo
+  function: test_httpbin_post
+  weight: 1
+  min_wait: 1000
+  max_wait: 5000
+- file: test_demo.py
+  class: test_demo
+  function: test_webservice
+```
+
+2) 根据配置文件locust.yml，读取模板生成locustfile文件，然后运行locust执行性能测试，命令如下：
+```
+$ cd Taffy\Tests
+$ python test_locust.py
+```
+
+### 7.2 nose编写测试用例方法
 
 nose会自动识别源文件，目录或包中的测试用例。
 
