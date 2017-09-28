@@ -1,9 +1,11 @@
 # coding=utf-8
 
 import sys
+import os
 reload(sys)
 sys.setdefaultencoding("utf-8")
-sys.path.append('../..')
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 from Util import *
 from selenium import webdriver
 import time

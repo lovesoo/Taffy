@@ -10,3 +10,4 @@ from redisTool import *
 from securityTool import *
 from seleniumTool import *
 from webserviceTool import *
+from locustTool import *

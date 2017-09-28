@@ -1,0 +1,5 @@
+        @task($weight)
+        def $class_$function(self):
+            min_wait = $min_wait
+            max_wait = $max_wait
+            self.client.$class_$function()

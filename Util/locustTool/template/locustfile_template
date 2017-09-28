@@ -1,0 +1,21 @@
+import time
+from locust import Locust, TaskSet, events, task
+$import
+
+
+class HttpClient(object):
+    def __init__(self):
+        pass
+
+$function
+
+
+class HttpLocust(Locust):
+    def __init__(self, *args, **kwargs):
+        super(HttpLocust, self).__init__(*args, **kwargs)
+        self.client = HttpClient()
+
+
+class ApiUser(HttpLocust):
+    class task_set(TaskSet):
+$task

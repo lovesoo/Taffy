@@ -5,7 +5,9 @@ requests==2.18.4
 pycrypto==2.6.1
 DBUtils==1.2
 suds==0.4
-six=1.11.0
+six==1.11.0
 selenium==3.5.0
+locust==0.8
+locustio==0.8.1
 pymssql==2.1.1
-MySQL-python=1.2.3
+MySQL-python==1.2.3
