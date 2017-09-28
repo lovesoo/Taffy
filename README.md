@@ -190,7 +190,7 @@ taffy集成locust的基本流程如下：
 
     locust.yml主要配置项如下：
 
-    a) mode为运行模式配置：为0使用普通模式，运行后需要打开locust WEB页面（默认http://localhost:8089/），手工填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，需要配置csv,c,r,run_time参数
+    a) mode为运行模式配置：为0使用普通模式，运行后需要打开[locust WEB页面](http://localhost:8089/)，手工填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，需要配置csv,c,r,run_time参数
 
     b) task为测试任务配置：必填项为file,class,function分别代表测试文件，类及方法；可选项为weight,min_wait及max_wait（默认值分别为1,1000,5000）
 
