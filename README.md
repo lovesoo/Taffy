@@ -175,11 +175,14 @@ Locust是使用Python语言编写实现的开源性能测试工具，简洁、�
 
 
 #### 7.1.2. 安装
-使用pip或easy_install，可以方便安装Locust
+使用pip或easy_install，可以方便安装Locust及YAML
 
 ```
 pip install locustio
+pip install PyYAML
 ```
+
+
 
 #### 7.1.3.taffy集成使用方法
 taffy集成locust的基本流程如下：
@@ -192,46 +195,47 @@ taffy集成locust的基本流程如下：
 
     a) mode为运行模式配置：为0使用普通模式，运行后需要打开[locust WEB页面](http://localhost:8089/)，手工填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，需要配置csv,c,r,run_time参数
 
-    b) task为测试任务配置：必填项为file,class,function分别代表测试文件，类及方法；可选项为weight,min_wait及max_wait（默认值分别为1,1000,5000）
+    b) min_wait及max_wait，可选参数，表示任务执行之间最小及最大等待时间（默认值分别为100，1000，单位ms）
+
+    c) task为测试任务配置：必填参数file,class,function分别代表测试文件，类及方法；可选参数weight（默认值1）
 
 
 ```
 ---
-#mode 运行模式 0 普通模式; 1 no-web模式，此时csv,c,r,run_time参数才有效
-#csv 运行结果文件名
-#c 并发用户数
-#r 每秒请求数
-#run_time 运行时间
+#mode 运行模式 0 普通模式; 1 no-web模式
+#min_wait 任务执行之间的最小等待时间，单位ms
+#max_wait 任务执行之间的最大等待时间，单位ms
+#只有mode为1时，如下参数才有效：csv,c,r,run_time
+  #csv 运行结果文件名
+  #c 并发用户数
+  #r 每秒请求数
+  #run_time 运行时间
 mode: 1
+min_wait: 100
+max_wait: 1000
 csv: locust
 c: 10
-r: 2
+r: 10
 run_time: 5m
-
 #task 性能测试任务
 task:
--
   #file 测试文件
   #class 测试类
   #function 测试方法
-  #weight 任务选择的概率权重
-  #min_wait 任务执行之间的最小等待时间，单位ms
-  #max_wait 任务执行之间的最大等待时间，单位ms
+  #weight 任务选择的概率权重，可不填默认为1
+-
   file: test_demo.py
   class: test_demo
   function: test_httpbin_get
   weight: 2
-  min_wait: 1000
-  max_wait: 2000
 - file: test_demo.py
   class: test_demo
   function: test_httpbin_post
   weight: 1
-  min_wait: 1000
-  max_wait: 5000
 - file: test_demo.py
   class: test_demo
   function: test_webservice
+  weight: 1
 ```
 
 2) 根据配置文件locust.yml，读取模板生成locustfile文件，然后运行locust执行性能测试，命令如下：

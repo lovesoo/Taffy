@@ -17,5 +17,8 @@ class HttpLocust(Locust):
 
 
 class ApiUser(HttpLocust):
+    min_wait = $min_wait
+    max_wait = $max_wait
+
     class task_set(TaskSet):
 $task

@@ -1,36 +1,35 @@
 ---
-#mode 运行模式 0 普通模式; 1 no-web模式，此时csv,c,r,run_time参数才有效
-#csv 运行结果文件名
-#c 并发用户数
-#r 每秒请求数
-#run_time 运行时间
+#mode 运行模式 0 普通模式; 1 no-web模式
+#min_wait 任务执行之间的最小等待时间，单位ms
+#max_wait 任务执行之间的最大等待时间，单位ms
+#只有mode为1时，如下参数才有效：csv,c,r,run_time
+  #csv 运行结果文件名
+  #c 并发用户数
+  #r 每秒请求数
+  #run_time 运行时间
 mode: 1
+min_wait: 100
+max_wait: 1000
 csv: locust
 c: 10
-r: 2
+r: 10
 run_time: 5m
-
 #task 性能测试任务
 task:
--
   #file 测试文件
   #class 测试类
   #function 测试方法
-  #weight 任务选择的概率权重
-  #min_wait 任务执行之间的最小等待时间，单位ms
-  #max_wait 任务执行之间的最大等待时间，单位ms
+  #weight 任务选择的概率权重，可不填默认为1
+-
   file: test_demo.py
   class: test_demo
   function: test_httpbin_get
   weight: 2
-  min_wait: 100
-  max_wait: 1000
 - file: test_demo.py
   class: test_demo
   function: test_httpbin_post
   weight: 1
-  min_wait: 1000
-  max_wait: 10000
 - file: test_demo.py
   class: test_demo
   function: test_webservice
+  weight: 1
