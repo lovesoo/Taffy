@@ -42,7 +42,7 @@ class locustUtil(object):
             tmp = {}
 
             # 获取task详细配置
-            file_name = task.get('file').strip('.py')
+            file_name = task.get('file').strip('.py').replace('/','.').replace('\\','.')
             class_name = task.get('class')
             function_name = task.get('function')
             weight = str(task.get('weight', 1))

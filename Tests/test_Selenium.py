@@ -49,16 +49,11 @@ class test_login(object):
         login_page.click_submit()
         time.sleep(1)
 
-        # 检查是否登陆失败
-        fail_tips = login_page.show_span()
-        if fail_tips:
+        if tips:
+            # 登陆失败校验提示信息
+            fail_tips = login_page.show_span()
             print 'Login Failed: %s' % fail_tips
-            if tips:
-                # 登陆失败提示信息校验
-                assert tips == fail_tips, 'Check Login Error Tips Failed!'
-            else:
-                # 登陆失败
-                assert False, 'Check UserID Failed!'
+            assert tips == fail_tips, 'Check Login Error Tips Failed!'
         else:
             # 登陆成功校验UserID
             login_userID = login_page.show_userid()

@@ -16,7 +16,7 @@ r: 10
 run_time: 5m
 #task 性能测试任务
 task:
-  #file 测试文件
+  #file 测试文件名，支持相对路径如test_xxx/text_xxx_file.py
   #class 测试类
   #function 测试方法
   #weight 任务选择的概率权重，可不填默认为1
