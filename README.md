@@ -244,6 +244,25 @@ task:
 $ cd Taffy\Tests
 $ python test_locust.py
 ```
+3) 与jmeter性能测试结果对比
+
+    针对[百度首页搜索接口](https://www.baidu.com/s?wd=taffy)，分别使用jmeter及locust进行了10路并发性能测试（时间为5min）。
+
+    jmeter性能测试统计结果如下：
+
+    Label | # Samples | Average | Min | Max | Std.Dev. | Error % | Throughput
+    ---|---|---|---|---|---|---|---
+    test_baidu | 1173 | 2539 | 1424 | 5856 | 617 | 0.0 | 3.9
+
+    locust性能测试统计结果如下：
+
+    Name | #reqs | #fails | Avg | Min | Max | Median | req/s
+    ---|---|---|---|---|---|---|---
+    test_baidu | 1248 | 0(0.00%) | 2390 | 1140 | 4094 | 2400 | 4.2
+
+    可以看出针对百度搜索接口进行5min的10路并发性能测试，jmeter及locust总体请求数分别为1173及1248，平均响应时间分别为2.539s及2.390s，每秒请求数分别为3.9及4.2。
+
+    可以得出结论：**locust与jmeter性能测试结果基本一致。**
 
 ### 7.2 nose编写测试用例方法
 
