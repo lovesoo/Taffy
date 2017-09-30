@@ -199,6 +199,7 @@ taffy集成locust的基本流程如下：
 
     c) task为测试任务配置：必填参数file,class,function分别代表测试文件，类及方法；可选参数weight（默认值1）
 
+    注：暂时不支持nosetests框架独有的[Test generators](http://nose.readthedocs.io/en/latest/writing_tests.html#test-generators)方法编写的功能自动化测试脚本转换为Locust性能测试脚本
 
 ```
 ---
