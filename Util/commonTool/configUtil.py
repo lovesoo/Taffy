@@ -1,8 +1,8 @@
 # coding=utf-8
 import os
 import inspect
-import ConfigParser
 import sys
+import yaml
 
 
 def GetPath(module=None):
@@ -14,24 +14,20 @@ def GetPath(module=None):
     return path
 
 
-ROOT = GetPath(sys.modules['Util']) + '/..'
+ROOT = os.path.abspath(os.path.join(GetPath(sys.modules['Util']), os.path.pardir))
 
 
 class ConfigUtil(object):
     @classmethod
-    def get(cls, section, option, path='/config/test.conf'):
+    def get(cls, section, option, path='/config/test.yml'):
         """获取配置文件中的配置，返回string"""
         filepath = ROOT + path
-        cf = ConfigParser.ConfigParser()
-        cf.read(filepath)
-
-        return cf.get(section, option)
+        config = yaml.load(file(filepath, 'r'))
+        return str(config[section][option])
 
     @classmethod
-    def getInt(cls, section, option, path='/config/test.conf'):
+    def getint(cls, section, option, path='/config/test.yml'):
         """获取配置文件中的配置，返回int"""
         filepath = ROOT + path
-        cf = ConfigParser.ConfigParser()
-        cf.read(filepath)
-
-        return cf.getint(section, option)
+        config = yaml.load(file(filepath, 'r'))
+        return int(config[section][option])

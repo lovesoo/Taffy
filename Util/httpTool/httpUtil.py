@@ -23,7 +23,6 @@ def _decode_dict(data):
     for key, value in data.iteritems():
         if isinstance(key, unicode):
             key = key.encode('utf-8')
-        if isinstance(value, unicode):
             value = value.encode('utf-8')
         elif isinstance(value, list):
             value = _decode_list(value)
@@ -37,7 +36,7 @@ class HttpUtil(object):
     '''基础调用类，包括基本的http method'''
 
     @classmethod
-    def get(cls, name, confSection='Http', confFile='/config/test.conf', **kwargs):
+    def get(cls, name, confSection='Http', confFile='/config/test.yml', **kwargs):
         """http get method
 
         :param params: 接口参数
@@ -53,12 +52,13 @@ class HttpUtil(object):
         path = ConfigUtil.get(confSection, 'Path', confFile)
 
         url = host + ':' + port + path + name
+
         response = requests.get(url, **kwargs)
         response.raise_for_status()
         return response
 
     @classmethod
-    def post(cls, name, confSection='Http', confFile='/config/test.conf', **kwargs):
+    def post(cls, name, confSection='Http', confFile='/config/test.yml', **kwargs):
         """http post methode
         :param params: 接口queryString
         :type params: dict

@@ -30,7 +30,7 @@ class test_demo(object):
         # http接口调用demo
         # 校验输入不同类型的wd时，百度是否均可正常搜索返回结果
         # wd分类：中文，英文，数字
-        wd_list = [u'lovesoo', u'软件测试', u'12345']
+        wd_list = [u'taffy', u'自动化测试', u'12345']
         for wd in wd_list:
             f = partial(test_demo.baidu, wd)
             f.description = 'search: %s' % wd
@@ -68,8 +68,8 @@ class test_demo(object):
     @nottest
     def test_db(self):
         # 数据库操作demo
-        print DBUtil.execute('select * from userinfo limit 1;')
-        print DBUtil.execute('select * from testdb.dbo.userinfo;', database='testdb', confSection='Sqlserver')
+        print DBUtil.execute('select * from user_info limit 1;', database='user')
+        print DBUtil.execute('select * from user.dbo.user_info;', database='user', confSection='Sqlserver')
 
     def test_OA(self):
         # 正交表设计测试用例demo
@@ -106,7 +106,7 @@ class test_demo(object):
     @nottest
     def test_redis(self):
         # redis/redis cluster操作 demo
-        print RedisUtil.execute('hexists', 'Search:Word', u'权志龙')
+        print RedisUtil.execute('hexists', 'Search:HotWord', u'刘德华')
         print RedisUtil.execute("get", "userSession:%s", "12345", confSection='Redis_Cluster')
 
     def test_security(self):
@@ -115,7 +115,7 @@ class test_demo(object):
         sec = Security()
         key_8 = string.lowercase[:8]
         key_16 = string.lowercase[:16]
-        data = 'Joo Test Automation Framework'
+        data = 'Taffy is a Test Automation Framework based on nosetests.'
 
         print 'DES:', sec.getDES(key_8, data).encode('hex')  # des
         print 'Decode DES:', sec.decodeDES(key_8, sec.getDES(key_8, data))  # decode des

@@ -14,7 +14,7 @@ class RedisUtil(object):
         pass
 
     @classmethod
-    def getCon(cls, confSection, confFile='/config/test.conf'):
+    def getCon(cls, confSection, confFile='/config/test.yml'):
         """从redis的连接池中获取一个redis连接，如果没有则创建一个连接池
             :param confSection: 配置的section名
             :type confSection: string

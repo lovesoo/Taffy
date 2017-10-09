@@ -65,7 +65,7 @@ class HessianUtil(object):
             )
 
             confSection = kwargs.get('confSection', 'Dubbo')
-            confFile = kwargs.get('confFile', '/config/test.conf')
+            confFile = kwargs.get('confFile', '/config/test.yml')
             host = ConfigUtil.get(confSection, 'Host', confFile)
             port = ConfigUtil.get(confSection, 'Port', confFile)
             service = ConfigUtil.get(confSection, 'Service', confFile)

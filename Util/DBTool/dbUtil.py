@@ -18,7 +18,7 @@ class DBUtil(object):
         pass
 
     @classmethod
-    def getCon(cls, confSection, database):
+    def getCon(cls, database, confSection, confFile='/config/test.yml'):
         """创建连接池，并从池中返回对应的数据库处理工具类
 
         :param confSection: 配置名
@@ -31,16 +31,16 @@ class DBUtil(object):
         clz = ''
 
         if key not in cls.pools:
-            dbType = ConfigUtil.get(confSection, 'Type', path='/config/test.conf')
+            dbType = ConfigUtil.get(confSection, 'Type', confFile)
             mincached = 10
             maxcached = 20
             maxshared = 15
 
             if dbType == 'mysql':
-                host = ConfigUtil.get(confSection, 'Host', path='/config/test.conf')
-                port = ConfigUtil.getInt(confSection, 'Port', path='/config/test.conf')
-                user = ConfigUtil.get(confSection, 'User', path='/config/test.conf')
-                pwd = ConfigUtil.get(confSection, 'Passwd', path='/config/test.conf')
+                host = ConfigUtil.get(confSection, 'Host', confFile)
+                port = ConfigUtil.getint(confSection, 'Port', confFile)
+                user = ConfigUtil.get(confSection, 'User', confFile)
+                pwd = ConfigUtil.get(confSection, 'Passwd', confFile)
                 charset = 'utf8'
 
                 dbParam = {'host': host, 'port': port, 'user': user, 'passwd': pwd, 'db': database, 'charset': charset, }
@@ -49,10 +49,10 @@ class DBUtil(object):
                 cls.pools[key] = (pool, clz)
 
             elif dbType == "sqlserver":
-                host = ConfigUtil.get(confSection, 'Host', path='/config/test.conf')
-                port = ConfigUtil.getInt(confSection, 'Port', path='/config/test.conf')
-                user = ConfigUtil.get(confSection, 'User', path='/config/test.conf')
-                pwd = ConfigUtil.get(confSection, 'Passwd', path='/config/test.conf')
+                host = ConfigUtil.get(confSection, 'Host', confFile)
+                port = ConfigUtil.getint(confSection, 'Port', confFile)
+                user = ConfigUtil.get(confSection, 'User', confFile)
+                pwd = ConfigUtil.get(confSection, 'Passwd', confFile)
                 as_dict = True
 
                 dbParam = {'host': host, 'port': port, 'user': user, 'password': pwd,
@@ -69,7 +69,7 @@ class DBUtil(object):
         return clz(databasePool.connection())
 
     @classmethod
-    def execute(cls, sql, params=(), database='user', confSection='Mysql'):
+    def execute(cls, sql, params=(), database='mysql', confSection='Mysql', confFile='/config/test.yml'):
         """执行mysql语句，支持动态语法
 
         :param sql: mysql语句，动态语法时包含占位符%s
@@ -80,11 +80,13 @@ class DBUtil(object):
         :type database: string
         :param confSection: 配置名，根据配置名去配置文件读取相应的配置
         :type confSection: string
+        :param confSection: 配置文件
+        :type confSection: string
         """
 
         try:
             data = []
-            instance = cls.getCon(confSection, database)
+            instance = cls.getCon(database, confSection, confFile)
             data = instance.execute(sql, params)
 
         except Exception as e:
