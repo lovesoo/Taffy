@@ -2,6 +2,7 @@
 import yaml
 import os
 import codecs
+import multiprocessing
 
 
 class locustUtil(object):
@@ -15,14 +16,30 @@ class locustUtil(object):
         从locust.yml配置文件，获取locust运行命令
         '''
         mode = self.cases.get('mode', 0)
+        no_web = self.cases.get('no_web', 0)
         if mode:
-            csv = self.cases.get('csv', 'locust')
-            c = self.cases.get('c', 10)
-            r = self.cases.get('r', 2)
-            run_time = self.cases.get('run_time', '5m')
-            return '--no-web --csv={0} -c{1} -r{2} --run-time {3}'.format(csv, c, r, run_time)
+            # 分布式模式
+            slaves_num = self.cases['params'].get('slaves_num', multiprocessing.cpu_count())
+            if no_web:
+                csv = self.cases['params'].get('csv', 'locust')
+                c = self.cases['params'].get('c', 10)
+                r = self.cases['params'].get('r', 2)
+                run_time = self.cases['params'].get('run_time', '5m')
+
+                return '--master --no-web --csv={0} -c{1} -r{2} --run-time {3} --expect-slaves {4}'.format(csv, c, r, run_time, slaves_num)
+            else:
+                return '--master'
         else:
-            return None
+            # 单例模式
+            if no_web:
+                csv = self.cases['params'].get('csv', 'locust')
+                c = self.cases['params'].get('c', 10)
+                r = self.cases['params'].get('r', 2)
+                run_time = self.cases['params'].get('run_time', '5m')
+
+                return '--no-web --csv={0} -c{1} -r{2} --run-time {3}'.format(csv, c, r, run_time)
+            else:
+                return None
 
     def genLocustfile(self, name='locustfile.py'):
         """
@@ -42,7 +59,7 @@ class locustUtil(object):
             tmp = {}
 
             # 获取task详细配置
-            file_name = task.get('file').strip('.py').replace('/','.').replace('\\','.')
+            file_name = task.get('file').strip('.py').replace('/', '.').replace('\\', '.')
             class_name = task.get('class')
             function_name = task.get('function')
             weight = str(task.get('weight', 1))

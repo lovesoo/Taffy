@@ -19,6 +19,8 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 QQ交流群：25452556
 
 ## 0. 最近更新
+2017-10-10 v1.3 支持分布式模式运行locust
+
 2017-09-28 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
 ## 1. 运行环境
@@ -193,39 +195,48 @@ taffy集成locust的基本流程如下：
 
     locust.yml主要配置项如下：
 
-    a) mode为运行模式配置：为0使用普通模式，运行后需要打开[locust WEB页面](http://localhost:8089/)，手工填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，需要配置csv,c,r,run_time参数
+    a) mode为运行模式，默认为0单例模式；1为分布式，使用可选参数slaves_num（默认值为机器CPU核数）
 
-    b) min_wait及max_wait，可选参数，表示任务执行之间最小及最大等待时间（默认值分别为100，1000，单位ms）
+    b) no-web 是否以no-web模式运行：为0使用普通模式，需要手工在浏览器打开[locust 页面](http://localhost:8089/)，填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，使用可选参数csv,c,r,run_time
 
-    c) task为测试任务配置：必填参数file,class,function分别代表测试文件，类及方法；可选参数weight（默认值1）
+    c) min_wait及max_wait，可选参数，表示任务执行之间最小及最大等待时间（默认值分别为100/1000，单位ms）
 
-    注：使用nose独有的[Test generators](http://nose.readthedocs.io/en/latest/writing_tests.html#test-generators)方法编写的Tests,转换为locustfile后Locust无法正常执行性能测试（实际运行结果为空），故这里填写的class/function暂不支持使用Test generators方法编写
+    d) task为测试任务配置：必填参数file,class,function分别代表测试文件，类及方法；可选参数weight（默认值1）
+
+    特别注意：使用nose独有的[Test generators](http://nose.readthedocs.io/en/latest/writing_tests.html#test-generators)方法编写的Tests,转换为locustfile后Locust无法正常执行性能测试（实际运行结果为空），故这里填写的class/function暂不支持使用Test generators方法编写
 
 ```
 ---
-#mode 运行模式 0 普通模式; 1 no-web模式
-#min_wait 任务执行之间的最小等待时间，单位ms
-#max_wait 任务执行之间的最大等待时间，单位ms
-#只有mode为1时，如下参数才有效：csv,c,r,run_time
+#mode 运行模式（默认为0） 0:单例模式; 1:分布式
+#no-web 是否以no-web模式运行（默认为0） 0:否; 1:是
+#min_wait 任务执行之间的最小等待时间，单位ms （默认为10ms）
+#max_wait 任务执行之间的最大等待时间，单位ms （默认为1000ms）
+
+#只有mode为1时，params中如下参数才有效：slaves_num
+  #slaves_num slaves数目（默认为当前机器cpu核数）
+
+#只有no-web为1时，params中如下参数才有效：csv,c,r,run_time
   #csv 运行结果文件名
   #c 并发用户数
   #r 每秒请求数
   #run_time 运行时间
 mode: 1
+no_web: 1
 min_wait: 100
 max_wait: 1000
-csv: locust
-c: 10
-r: 10
-run_time: 5m
+params:
+  slaves_num: 4
+  csv: locust
+  c: 10
+  r: 10
+  run_time: 5m
 #task 性能测试任务
 task:
-  #file 测试文件，支持相对路径如test_xxx/text_xxx_file.py
+  #file 测试文件名，支持相对路径如test_xxx/text_xxx_file.py
   #class 测试类
   #function 测试方法
-  #weight 任务选择的概率权重，可不填默认为1
--
-  file: test_demo.py
+  #weight 任务选择的概率权重（默认1）
+- file: test_demo.py
   class: test_demo
   function: test_httpbin_get
   weight: 2
