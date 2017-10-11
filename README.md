@@ -99,16 +99,7 @@ QQ交流群：25452556
 
         python2.7+32位windows系统，请选择：pymssql-2.1.1.win32-py2.7.exe (md5)
 
-    3) pyhessian
-
-        Github地址：https://github.com/theatlantic/python-hessian
-
-        下载zip包,解压后进行文件夹内，运行如下命令安装
-
-        ```
-        python setup.py install
-        ```
-    4) webdriver
+    3) webdriver
 
         这里只说下chromedriver的下载配置方法：
         1. 下载地址：https://sites.google.com/a/chromium.org/chromedriver/downloads

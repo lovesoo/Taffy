@@ -7,8 +7,8 @@ DBUtils==1.2
 suds==0.4
 six==1.11.0
 selenium==3.5.0
-locust==0.8
 locustio==0.8.1
 PyYAML==3.12
+python-hessian==1.0.2
 pymssql==2.1.1
 MySQL-python==1.2.3
