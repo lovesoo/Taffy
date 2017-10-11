@@ -10,7 +10,7 @@ The basic useage can be found at Tests/ folder.
 
 Taffy是基于nosetests的自动化测试框架。
 
-Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selinum, Appium进行WEB或APP的自动化测试，或集成locust进行性能测试。
+Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selenium, Appium进行WEB或APP的自动化测试，或集成locust进行性能测试。
 
 Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解密等接口。
 
@@ -18,10 +18,16 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
 QQ交流群：25452556
 
-## 0. 最近更新
-2017-10-10 v1.3 支持分布式模式运行locust
+## 0. 更新记录
+20171010 v1.4 支持分布式模式运行locust
 
-2017-09-28 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+20171009 v1.3 统一配置文件格式为YAML
+
+20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+
+20170922 v1.1 集成selenium，新增相关测试demo
+
+20170920 v1.0 第一个版本发布，支持http/hessian/webservice等类型接口功能自动化测试，并提供相关Util工具类
 
 ## 1. 运行环境
 - macOS，linux，windows
