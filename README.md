@@ -16,7 +16,7 @@ Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解�
 
 基本用法可以参考[Tests/目录](https://github.com/lovesoo/Taffy/tree/master/Tests)下示例demo.
 
-QQ交流群：25452556
+QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 ## 0. 更新记录
 20171010 v1.4 支持分布式模式运行locust
@@ -73,19 +73,19 @@ QQ交流群：25452556
     ```
 
 
-3) 安装第三方lib库
+3) 第三方lib
 
-    使用pip install可以安装大多数的lib库：
+    [Taffy/requirements.txt文件 ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib，可以使用pip直接安装：
 
     ```
-    #可以单独安装lib库
-    pip install xxxlib
-
-    #也可以批量安装
+    #批量安装
     pip install -r requirements.txt
+
+    #可以单独安装xxxlib
+    pip install xxxlib
     ```
 
-    Windows下，一些棘手的lib库安装方法:
+    Windows下，一些棘手的lib安装方法:
 
     1) mysql-python
 
@@ -106,30 +106,46 @@ QQ交流群：25452556
 
         2. 下载chromedriver_win32.zip，解压后将chromedriver.exe放到Python安装路径下（如C:\Python27\）
 
-## 4. 使用方法
+4) PyCharm配置
 
+    1) 运行PyCharm，打开下载的项目：taffy
 
-1) PyCharm配置
-
-    1) 「File」–>「open」，打开下载的项目taffy
-
-    2) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，Default test runner选择Nosetests
+    2) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，配置Default test runner为Nosetests
 
     3) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
 
-    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
+    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
-2) 执行功能测试用例
+## 4. 执行测试用例
+1) 功能自动化测试
 
-    1) 选中Tests/test_demo.py
+    可以使用两种方法，执行功能自动化测试脚本：
 
-    2) 鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
+    1) 图形用户界面GUI
 
-    3) 也可使用快捷键执行测试：Ctrl+Shift+F10
+        1) 在PyCharm中，选中测试文件，如Tests/test_demo.py
 
-        注：在脚本中使用快捷键Ctrl+Shift+F10，会单独执行选中的test class下的一个test func
+        2) 鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
 
-3) 执行性能测试用例
+            注1：也可使用快捷键：Ctrl+Shift+F10
+
+            注2：在脚本里使用快捷键Ctrl+Shift+F10，会单独执行选中的test class或test func
+
+    3) 命令行界面CLI
+
+        在PyCharm下方Terminal终端中，输入命令执行测试：
+
+        ```
+        # 执行测试文件test_demo.py
+        $ nosetests -v Tests/test_demo.py
+
+        # 单独执行测试文件test_demo.py中测试类test_demo下的test_http测试方法
+        $ nosetests -v Tests/test_demo.py:test_demo.test_http
+        ```
+        nosetests更多运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
+
+
+2) 性能测试
 
     1) 配置config/locust.yml
 
@@ -140,23 +156,24 @@ QQ交流群：25452556
     $ python test_locust.py
     ```
 
-    locust框架集成使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+    Taffy集成locust性能测试框架使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
 
 ## 5.参考资料
 
-    1. http://nose.readthedocs.io/en/latest/index.html
+1. http://nose.readthedocs.io/en/latest/index.html
 
-    2. https://docs.python.org/dev/library/unittest.html
+2. https://docs.python.org/dev/library/unittest.html
 
-    3. https://docs.locust.io/en/latest/
+3. https://docs.locust.io/en/latest/
 
-    4. http://www.cnblogs.com/yufeihlf/p/5764099.html
+4. http://www.cnblogs.com/yufeihlf/p/5764099.html
 
 
 ## 6.联络方式
 
-    QQ交流群：25452556
+QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
+
 
 ## 7. 附录
 
@@ -180,8 +197,6 @@ Locust是使用Python语言编写实现的开源性能测试工具，简洁、�
 pip install locustio
 pip install PyYAML
 ```
-
-
 
 #### 7.1.3.taffy集成使用方法
 taffy集成locust的基本流程如下：
