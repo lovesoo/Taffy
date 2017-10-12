@@ -116,10 +116,16 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
     4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
-## 4. 测试执行及报告导出
+## 4. 测试编写、执行及报告导出
 1) 功能自动化测试
 
-    1) 测试执行
+    1) 测试用例编写
+
+        taffy目前只支持nose方式编写测试用例，详见[附录7-2](https://github.com/lovesoo/Taffy#72-nose编写测试用例方法)
+
+        后续若有需求，可扩展支持其他方式，如以excel,csv,yaml等数据驱动形式保存用例
+
+    2) 测试执行
 
         可以使用两种方式执行功能自动化测试脚本：
 
@@ -146,7 +152,7 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
             ```
             更多nosetests运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
 
-    2) 测试报告
+    3) 测试报告
 
         功能自动化测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
 
