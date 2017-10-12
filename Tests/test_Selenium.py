@@ -15,21 +15,22 @@ class test_login(object):
     def __init__(self):
         pass
 
-    def setUp(self):
-        self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(30)
-        self.url = "http://mail.126.com"
-        self.suffix = '@126.com'
-        self.user = "tafffy"
-        self.passwd = "lovesoo1314"
-        self.title = u'网易'
-        self.tips = u'帐号或密码错误'
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.implicitly_wait(30)
+        cls.url = "http://mail.126.com"
+        cls.suffix = '@126.com'
+        cls.user = "tafffy"
+        cls.passwd = "lovesoo1314"
+        cls.title = u'网易'
+        cls.tips = u'帐号或密码错误'
 
-    def tearDown(self):
-        self.driver.quit()
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
     @staticmethod
-    @with_setup(setUp, tearDown)
     def login(self, user, passwd, tips=''):
         # 定义通用login方法
         print 'Login user: %s ,passwd: %s' % (user, passwd)
@@ -57,6 +58,10 @@ class test_login(object):
         else:
             # 登陆成功校验UserID
             login_userID = login_page.show_userid()
+            # 点击退出
+            login_page.click_logout()
+            time.sleep(1)
+
             print 'Login UserID: %s' % login_userID
             assert user + self.suffix == login_userID, 'Check UserID Failed!'
 
