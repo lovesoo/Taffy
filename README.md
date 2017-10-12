@@ -119,31 +119,38 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 ## 4. 测试执行及报告导出
 1) 功能自动化测试
 
-    可以使用两种方法，执行功能自动化测试脚本：
+    1) 测试执行
 
-    1) 图形用户界面GUI
+        可以使用两种方式执行功能自动化测试脚本：
 
-        1) 在PyCharm中，选中测试文件，如Tests/test_demo.py
+        1) 图形用户界面GUI
 
-        2) 鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
+            在PyCharm中，选中测试文件，如Tests/test_demo.py
+
+            鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
 
             注1：也可使用快捷键：Ctrl+Shift+F10
 
             注2：在脚本里使用快捷键Ctrl+Shift+F10，会单独执行选中的test class或test func
 
-    3) 命令行界面CLI
+        2) 命令行界面CLI
 
-        在PyCharm下方Terminal终端中，输入命令执行测试：
+            在PyCharm下方Terminal终端中，输入命令执行测试：
 
-        ```
-        # 执行测试文件test_demo.py
-        $ nosetests -v Tests/test_demo.py
+            ```
+            # 执行测试文件test_demo.py
+            $ nosetests -v Tests/test_demo.py
 
-        # 单独执行测试文件test_demo.py中测试类test_demo下的test_http测试方法
-        $ nosetests -v Tests/test_demo.py:test_demo.test_http
-        ```
-        nosetests更多运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
+            # 单独执行测试文件test_demo.py中测试类test_demo下的test_http测试方法
+            $ nosetests -v Tests/test_demo.py:test_demo.test_http
+            ```
+            更多nosetests运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
 
+    2) 测试报告
+
+        功能自动化测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
+
+    详见[《PyCharm运行Nosetests并导出测试报告》](http://lovesoo.org/pycharm-run-nosetests-and-exports-test-report.html)
 
 2) 性能测试
 
@@ -156,13 +163,20 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
     $ python test_locust.py
     ```
 
+    3) 测试报告
+
+        1) 普通模式
+
+            locust以普通模式运行时，可在[web页面](http://localhost:8089/)实时查看运行结果，包括请求数，响应时间，RPS，失败率等
+
+            测试执行完成后可在WEB页面下载CSV格式测试报告（选择Download Data -> Download response time distribution CSV）
+
+        2) no-web模式
+
+            locust以no-web模式运行时，csv格式数据会定时保存在运行目录下，如locust_distribution.csv和locust_requests.csv
+
     Taffy集成locust性能测试框架使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
-3) 测试报告
-
-    测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
-
-    详见：http://lovesoo.org/pycharm-run-nosetests-and-exports-test-report.html
 
 ## 5.参考资料
 
@@ -272,6 +286,7 @@ task:
 $ cd Taffy\Tests
 $ python test_locust.py
 ```
+
 3) 与jmeter性能测试结果对比
 
     针对[百度首页搜索接口](https://www.baidu.com/s?wd=taffy)，分别使用jmeter及locust进行了10路并发性能测试（时间为5min）。
