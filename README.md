@@ -116,7 +116,7 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
     4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
-## 4. 执行测试用例
+## 4. 测试执行及报告导出
 1) 功能自动化测试
 
     可以使用两种方法，执行功能自动化测试脚本：
@@ -158,6 +158,11 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
     Taffy集成locust性能测试框架使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
+3) 测试报告
+
+    测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
+
+    详见：http://lovesoo.org/pycharm-run-nosetests-and-exports-test-report.html
 
 ## 5.参考资料
 
