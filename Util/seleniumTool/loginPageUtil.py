@@ -15,8 +15,9 @@ class loginPage(basePage):
     password_loc = (By.NAME, 'password')
     submit_loc = (By.ID, 'dologin')
     span_loc = (By.ID, 'nerror')
-    dynpw_loc = (By.ID, "lbDynPw")
-    userid_loc = (By.ID, "spnUid")
+    dynpw_loc = (By.ID, 'lbDynPw')
+    userid_loc = (By.ID, 'spnUid')
+    logout_loc = (By.ID, '_mail_component_41_41')
 
     # 操作
     # 通过继承覆盖（Overriding）方法：如果子类和父类的方法名相同，优先用子类自己的方法。
@@ -27,10 +28,12 @@ class loginPage(basePage):
 
     # 输入用户名：调用send_keys对象，输入用户名
     def input_username(self, username):
+        self.find_element(*self.username_loc).clear()
         self.find_element(*self.username_loc).send_keys(username)
 
     # 输入密码：调用send_keys对象，输入密码
     def input_password(self, password):
+        self.find_element(*self.password_loc).clear()
         self.find_element(*self.password_loc).send_keys(password)
 
     # 点击登录：调用send_keys对象，点击登录
@@ -55,3 +58,7 @@ class loginPage(basePage):
     # 登录成功页面中的用户ID查找
     def show_userid(self):
         return self.find_element(*self.userid_loc).text
+
+    # 登陆退出：调用send_keys对象，点击退出
+    def click_logout(self):
+        self.find_element(*self.logout_loc).click()
