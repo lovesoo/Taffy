@@ -20,15 +20,17 @@ class locustUtil(object):
         if mode:
             # 分布式模式
             slaves_num = self.cases['params'].get('slaves_num', multiprocessing.cpu_count())
+            master_port = self.cases['params'].get('master_port', 5557)
             if no_web:
                 csv = self.cases['params'].get('csv', 'locust')
                 c = self.cases['params'].get('c', 10)
                 r = self.cases['params'].get('r', 2)
                 run_time = self.cases['params'].get('run_time', '5m')
 
-                return '--master --no-web --csv={0} -c{1} -r{2} --run-time {3} --expect-slaves {4}'.format(csv, c, r, run_time, slaves_num)
+                return '--master --no-web --csv {0} -c {1} -r {2} --run-time {3} --expect-slaves {4} --master-bind-port {5}'.format(csv, c, r, run_time, slaves_num, master_port)
             else:
-                return '--master'
+                port = self.cases['params'].get('port', 8089)
+                return '--master -P {0} --master-bind-port {1}'.format(port, master_port)
         else:
             # 单例模式
             if no_web:
@@ -37,9 +39,10 @@ class locustUtil(object):
                 r = self.cases['params'].get('r', 2)
                 run_time = self.cases['params'].get('run_time', '5m')
 
-                return '--no-web --csv={0} -c{1} -r{2} --run-time {3}'.format(csv, c, r, run_time)
+                return '--no-web --csv {0} -c{1} -r{2} --run-time {3}'.format(csv, c, r, run_time)
             else:
-                return None
+                port = self.cases['params'].get('port', 8089)
+                return '-P {0}'.format(port)
 
     def genLocustfile(self, name='locustfile.py'):
         """

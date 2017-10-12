@@ -216,82 +216,103 @@ Locust是使用Python语言编写实现的开源性能测试工具，简洁、�
 
 
 #### 7.1.2. 安装
-使用pip或easy_install，可以方便安装Locust及YAML
+可以使用pip快速安装Locust：
 
 ```
 pip install locustio
-pip install PyYAML
 ```
 
-#### 7.1.3.taffy集成使用方法
+#### 7.1.3. 使用方法
 taffy集成locust的基本流程如下：
+
 1) 配置config/locust.yml
 
     YAML是对人友好的数据序列化标准，可适用所有的编程语言。
     与json相互在线转换网站：https://www.json2yaml.com/
 
+    可以使用pip安装PyYAML：
+
+    ```
+    pip install PyYAML
+    ```
+
     locust.yml主要配置项如下：
 
-    a) mode为运行模式，默认为0单例模式；1为分布式，使用可选参数slaves_num（默认值为机器CPU核数）
+    a) mode 运行模式
 
-    b) no-web 是否以no-web模式运行：为0使用普通模式，需要手工在浏览器打开[locust 页面](http://localhost:8089/)，填入并发用户数及每秒请求数后执行测试；为1则使用no-web模式，使用可选参数csv,c,r,run_time
+    为0表示单例模式；
+
+    为1表示分布式，使用可选参数slaves_num,master_port
+
+    b) no-web 是否以no-web模式运行
+
+    为0表示普通模式，使用可选参数port；运行后需要先手工在浏览器打开[locust 页面](http://localhost:8089/)，填入并发用户数及每秒请求数后再执行测试
+
+    为1表示no-web模式，使用可选参数csv,c,r,run_time
 
     c) min_wait及max_wait，可选参数，表示任务执行之间最小及最大等待时间（默认值分别为100/1000，单位ms）
 
     d) task为测试任务配置：必填参数file,class,function分别代表测试文件，类及方法；可选参数weight（默认值1）
 
-    特别注意：使用nose独有的[Test generators](http://nose.readthedocs.io/en/latest/writing_tests.html#test-generators)方法编写的Tests,转换为locustfile后Locust无法正常执行性能测试（实际运行结果为空），故这里填写的class/function暂不支持使用Test generators方法编写
+    特别注意：使用nose独有的[Test generators](http://nose.readthedocs.io/en/latest/writing_tests.html#test-generators)方法编写的Tests,转换为locustfile后Locust无法正常执行性能测试（运行结果为空），故这里填写的class/function暂不支持使用Test generators方法编写
 
-```
----
-#mode 运行模式（默认为0） 0:单例模式; 1:分布式
-#no-web 是否以no-web模式运行（默认为0） 0:否; 1:是
-#min_wait 任务执行之间的最小等待时间，单位ms （默认为10ms）
-#max_wait 任务执行之间的最大等待时间，单位ms （默认为1000ms）
+    locust.yml示例如下：
 
-#只有mode为1时，params中如下参数才有效：slaves_num
-  #slaves_num slaves数目（默认为当前机器cpu核数）
+    ```
+    ---
+    #mode 运行模式（默认为0） 0:单例模式; 1:分布式
+    #no-web 是否以no-web模式运行（默认为0） 0:否; 1:是
+    #min_wait/max_wait 任务执行之间的最小、最大等待时间（默认为10/1000ms）
 
-#只有no-web为1时，params中如下参数才有效：csv,c,r,run_time
-  #csv 运行结果文件名
-  #c 并发用户数
-  #r 每秒请求数
-  #run_time 运行时间
-mode: 1
-no_web: 1
-min_wait: 100
-max_wait: 1000
-params:
-  slaves_num: 4
-  csv: locust
-  c: 10
-  r: 10
-  run_time: 5m
-#task 性能测试任务
-task:
-  #file 测试文件名，支持相对路径如test_xxx/text_xxx_file.py
-  #class 测试类
-  #function 测试方法
-  #weight 任务选择的概率权重（默认1）
-- file: test_demo.py
-  class: test_demo
-  function: test_httpbin_get
-  weight: 2
-- file: test_demo.py
-  class: test_demo
-  function: test_httpbin_post
-  weight: 1
-- file: test_demo.py
-  class: test_demo
-  function: test_webservice
-  weight: 1
-```
+    #只有mode为1时，params中如下参数才有效：slaves_num,master_port
+      #slaves_num slaves数目（默认为当前机器cpu核数）
+      #master_port master绑定端口号（默认5557）
+
+    #只有no-web为0时，params中如下参数才有效：port
+      #port web端口号，默认8089
+
+    #只有no-web为1时，params中如下参数才有效：csv,c,r,run_time
+      #csv 运行结果文件名
+      #c 并发用户数
+      #r 每秒请求数
+      #run_time 运行时间
+    mode: 1
+    no_web: 1
+    min_wait: 100
+    max_wait: 1000
+    params:
+      slaves_num: 4
+      master_port: 5557
+      port: 8089
+      csv: locust
+      c: 10
+      r: 10
+      run_time: 5m
+    #task 性能测试任务
+    task:
+      #file 测试文件名，支持相对路径如test_xxx/text_xxx_file.py
+      #class 测试类
+      #function 测试方法
+      #weight 任务选择的概率权重（默认1）
+    - file: test_demo.py
+      class: test_demo
+      function: test_httpbin_get
+      weight: 2
+    - file: test_demo.py
+      class: test_demo
+      function: test_httpbin_post
+      weight: 1
+    - file: test_demo.py
+      class: test_demo
+      function: test_webservice
+      weight: 1
+    ```
 
 2) 根据配置文件locust.yml，读取模板生成locustfile文件，然后运行locust执行性能测试，命令如下：
-```
-$ cd Taffy\Tests
-$ python test_locust.py
-```
+    ```
+    $ cd Taffy\Tests
+    $ python test_locust.py
+    ```
 
 3) 与jmeter性能测试结果对比
 

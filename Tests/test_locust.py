@@ -6,9 +6,9 @@ from Util import *
 import multiprocessing
 
 
-def start_slave(locust_file):
+def start_slave(locust_file, master_port):
     print 'start slave pid:\t{0}'.format(os.getpid())
-    os.system('locust -f {0} --slave'.format(locust_file))
+    os.system('locust -f {0} --slave --master-port {1}'.format(locust_file, master_port))
 
 
 if __name__ == '__main__':
@@ -20,27 +20,22 @@ if __name__ == '__main__':
     locust_command = LU.getRunCommand()
 
     # 运行locust
-    if locust_command:
-        if 'master' in locust_command:
-            # 分布式
-            num = LU.cases['params'].get('slaves_num', multiprocessing.cpu_count())
-            record = []
-            for i in range(num):
-                process = multiprocessing.Process(target=start_slave, args=(locust_file,))
-                process.start()
-                record.append(process)
+    if 'master' in locust_command:
+        # 分布式
+        num = LU.cases['params'].get('slaves_num', multiprocessing.cpu_count())
+        master_port = LU.cases['params'].get('master_port', 5557)
+        record = []
+        for i in range(num):
+            process = multiprocessing.Process(target=start_slave, args=(locust_file, master_port))
+            process.start()
+            record.append(process)
 
-            print 'start master pid:\t{0}'.format(os.getpid())
-            cmd = 'locust -f {0} {1}'.format(locust_file, locust_command)
-            print 'cmd:\t{0}'.format(cmd)
-            os.system(cmd)
-        else:
-            # 单例模式，no-web
-            cmd = 'locust -f {0} {1}'.format(locust_file, locust_command)
-            print 'cmd:\t{0}'.format(cmd)
-            os.system(cmd)
+        print 'start master pid:\t{0}'.format(os.getpid())
+        cmd = 'locust -f {0} {1}'.format(locust_file, locust_command)
+        print 'cmd:\t{0}'.format(cmd)
+        os.system(cmd)
     else:
-        # 单例模式，web
-        cmd = 'locust -f {0}'.format(locust_file)
+        # 单例模式
+        cmd = 'locust -f {0} {1}'.format(locust_file, locust_command)
         print 'cmd:\t{0}'.format(cmd)
         os.system(cmd)

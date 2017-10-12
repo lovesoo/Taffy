@@ -1,11 +1,14 @@
 ---
 #mode 运行模式（默认为0） 0:单例模式; 1:分布式
 #no-web 是否以no-web模式运行（默认为0） 0:否; 1:是
-#min_wait 任务执行之间的最小等待时间，单位ms （默认为10ms）
-#max_wait 任务执行之间的最大等待时间，单位ms （默认为1000ms）
+#min_wait/max_wait 任务执行之间的最小、最大等待时间（默认为10/1000ms）
 
-#只有mode为1时，params中如下参数才有效：slaves_num
+#只有mode为1时，params中如下参数才有效：slaves_num,master_port
   #slaves_num slaves数目（默认为当前机器cpu核数）
+  #master_port master绑定端口号（默认5557）
+
+#只有no-web为0时，params中如下参数才有效：port
+  #port web端口号，默认8089
 
 #只有no-web为1时，params中如下参数才有效：csv,c,r,run_time
   #csv 运行结果文件名
@@ -18,6 +21,8 @@ min_wait: 100
 max_wait: 1000
 params:
   slaves_num: 4
+  master_port: 5557
+  port: 8089
   csv: locust
   c: 10
   r: 10
