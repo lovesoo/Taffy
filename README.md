@@ -37,6 +37,8 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 ## 0. 更新记录
 
+20171015 v1.5 新增《[**Taffy入门教学视频**](http://v.youku.com/v_show/id_XMzA4NTk2MDI5Mg==.html)》
+
 20171010 v1.4 支持分布式模式运行locust
 
 20171009 v1.3 统一配置文件格式为YAML
@@ -128,11 +130,13 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
     1) 运行PyCharm，打开下载的项目：taffy
 
-    2) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，配置Default test runner为Nosetests
+    2) 「File」–>「Settings 」–>「Project:Taffy」->「Project Interpreter」，配置Python interpreter为当前python版本安装目录
 
-    3) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
+    3) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，配置Default test runner为Nosetests
 
-    4)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
+    4) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
+
+    5)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
 ## 4. 测试编写、执行及报告导出
 1) 功能自动化测试
