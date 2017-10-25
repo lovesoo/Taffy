@@ -30,9 +30,11 @@ class ConfigUtil(object):
         filepath = ROOT + path
         config = yaml.load(file(filepath, 'r'))
         if option:
-            return str(config[section][option])
+            result = config[section][option]
         else:
-            return str(config[section])
+            result = config[section]
+
+        return str(result) if isinstance(result, (str, unicode, int)) else result
 
     @classmethod
     def getint(cls, section, option='', path='/config/test.yml'):

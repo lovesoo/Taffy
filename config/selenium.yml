@@ -1,0 +1,17 @@
+---
+site:
+  url: http://mail.126.com
+  title: 网易
+  tips: 帐号或密码错误
+  suffix: "@126.com"
+  user: tafffy
+  passwd: lovesoo1314
+
+loc:
+  username_loc: (By.NAME, 'email')
+  password_loc: (By.NAME, 'password')
+  submit_loc: (By.ID, 'dologin')
+  span_loc: (By.ID, 'nerror')
+  dynpw_loc: (By.ID, 'lbDynPw')
+  userid_loc: (By.ID, 'spnUid')
+  logout_loc: (By.ID, '_mail_component_41_41')

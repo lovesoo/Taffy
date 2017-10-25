@@ -6,18 +6,24 @@ loginPageUtil.py
 
 from selenium.webdriver.common.by import By
 from basePageUtil import basePage
+from Util import *
+
+selenium_yml = '/config/selenium.yml'
 
 
 class loginPage(basePage):
     # 继承basePage类
+
+    loc = ConfigUtil.get('loc', path=selenium_yml)
+
     # 定位器，通过元素属性定位元素对象
-    username_loc = (By.NAME, 'email')
-    password_loc = (By.NAME, 'password')
-    submit_loc = (By.ID, 'dologin')
-    span_loc = (By.ID, 'nerror')
-    dynpw_loc = (By.ID, 'lbDynPw')
-    userid_loc = (By.ID, 'spnUid')
-    logout_loc = (By.ID, '_mail_component_41_41')
+    username_loc = eval(loc['username_loc'])
+    password_loc = eval(loc['password_loc'])
+    submit_loc = eval(loc['submit_loc'])
+    span_loc = eval(loc['span_loc'])
+    dynpw_loc = eval(loc['dynpw_loc'])
+    userid_loc = eval(loc['userid_loc'])
+    logout_loc = eval(loc['logout_loc'])
 
     # 操作
     # 通过继承覆盖（Overriding）方法：如果子类和父类的方法名相同，优先用子类自己的方法。
@@ -28,11 +34,11 @@ class loginPage(basePage):
 
     # 输入用户名：调用send_keys对象，输入用户名
     def input_username(self, username):
-        self.send_keys(self.username_loc,username,clear_first=True)
+        self.send_keys(self.username_loc, username, clear_first=True)
 
     # 输入密码：调用send_keys对象，输入密码
     def input_password(self, password):
-        self.send_keys(self.password_loc,password,clear_first=True)
+        self.send_keys(self.password_loc, password, clear_first=True)
 
     # 点击登录：调用send_keys对象，点击登录
     def click_submit(self):
@@ -60,4 +66,3 @@ class loginPage(basePage):
     # 登陆退出：调用send_keys对象，点击退出
     def click_logout(self):
         self.find_element(self.logout_loc).click()
-
