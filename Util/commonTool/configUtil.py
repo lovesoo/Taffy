@@ -19,15 +19,27 @@ ROOT = os.path.abspath(os.path.join(GetPath(sys.modules['Util']), os.path.pardir
 
 class ConfigUtil(object):
     @classmethod
-    def get(cls, section, option, path='/config/test.yml'):
+    def getall(cls, path='/config/test.yml'):
+        """获取配置文件中的配置，返回string"""
+        filepath = ROOT + path
+        return yaml.load(file(filepath, 'r'))
+
+    @classmethod
+    def get(cls, section, option='', path='/config/test.yml'):
         """获取配置文件中的配置，返回string"""
         filepath = ROOT + path
         config = yaml.load(file(filepath, 'r'))
-        return str(config[section][option])
+        if option:
+            return str(config[section][option])
+        else:
+            return str(config[section])
 
     @classmethod
-    def getint(cls, section, option, path='/config/test.yml'):
+    def getint(cls, section, option='', path='/config/test.yml'):
         """获取配置文件中的配置，返回int"""
         filepath = ROOT + path
         config = yaml.load(file(filepath, 'r'))
-        return int(config[section][option])
+        if option:
+            return int(config[section][option])
+        else:
+            return int(config[section])
