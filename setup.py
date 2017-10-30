@@ -81,6 +81,7 @@ if __name__ == '__main__':
         print '\t-w module A [module B...], --without module A [module B...]\tsetup without the modules, eg "--without redis security db".'
         print '\t--with module A [module B...]\tsetup only with the modules, eg "--with redis security db".'
         print '\t\tSupported setup with/without modules are [redis,security,db,webservice,selenium,locust,hessian]'
+        exit(0)
     else:
         assert False, 'Not supported option and see --help for available options.'
 
