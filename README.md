@@ -37,13 +37,15 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 ## 0. 更新记录
 
+20171030 v1.6 支持模块自定义配置安装，详见[**setup.py**](https://github.com/lovesoo/Taffy/blob/master/setup.py)
+
 20171015 v1.5 新增《[**Taffy入门教学视频**](http://v.youku.com/v_show/id_XMzA4NTk2MDI5Mg==.html)》
 
 20171010 v1.4 支持分布式模式运行locust
 
 20171009 v1.3 统一配置文件格式为YAML
 
-20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[**附录7-1**](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
 
 20170922 v1.1 集成selenium，新增相关测试demo
 
@@ -95,17 +97,28 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 3) 第三方lib
 
-    [Taffy/requirements.txt文件 ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib，可以使用pip直接安装：
+    [requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以通过[setup.py](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行最大化、最小化及自定义模块安装配置：
 
     ```
-    #批量安装
-    pip install -r requirements.txt
+    # 默认最大化安装全部模块
+    $ python setup.py
 
-    #可以单独安装xxxlib
-    pip install xxxlib
+    # -m或--min，最小化安装
+    $ python setup.py -m
+
+    # -w或--without A B，不安装模块A,B
+    $ python setup.py --without db redis locust
+
+    # --with A B,在最小化安装基础上，只安装模块A,B
+    $ python setup.py --with db redis locust
+
+    # --with及--without 支持配置的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
+
+    # -h或--help，查看帮助
+    $ python setup.py -h
     ```
 
-    Windows下，一些棘手的lib安装方法:
+    当默认最大化安装全部模块时，Windows系统下一些棘手的lib安装方法:
 
     1) mysql-python
 

@@ -1,5 +1,3 @@
-#coding=utf-8
-
 from checkTool import *
 from commonTool import *
 from DBTool import *
