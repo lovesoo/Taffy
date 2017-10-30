@@ -59,7 +59,9 @@ if __name__ == '__main__':
         print 'Taffy setup with the minimum modules.'
         markfile(all_modules)
     elif '-w' == sys.argv[1] or 'without' in sys.argv[1]:
-        if all([m in all_modules for m in sys.argv[2:]]):
+        if not sys.argv[2:]:
+            print 'Taffy setup without the modules:', sys.argv[2:]
+        elif all([m in all_modules for m in sys.argv[2:]]):
             print 'Taffy setup without the modules:', sys.argv[2:]
             markfile(sys.argv[2:])
         else:
