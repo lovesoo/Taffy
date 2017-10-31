@@ -60,6 +60,7 @@ class test_demo(object):
         id = 123456789
         HessianUtil.Invoke(method, req, id)
 
+    @nottest
     def test_webservice(self):
         # webservice接口调用demo
         url = 'http://www.gpsso.com/WebService/Dream/Dream.asmx?wsdl'
@@ -71,6 +72,7 @@ class test_demo(object):
         print DBUtil.execute('select * from user_info limit 1;', database='user')
         print DBUtil.execute('select * from user.dbo.user_info;', database='user', confSection='Sqlserver')
 
+    @nottest
     def test_OA(self):
         # 正交表设计测试用例demo
         oat = OAT()
@@ -109,6 +111,7 @@ class test_demo(object):
         print RedisUtil.execute('hexists', 'Search:HotWord', u'刘德华')
         print RedisUtil.execute("get", "userSession:%s", "12345", confSection='Redis_Cluster')
 
+    @nottest
     def test_security(self):
         # 加密方法使用demo
         import string
