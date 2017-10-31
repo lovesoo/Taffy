@@ -14,28 +14,40 @@ Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webse
 
 Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解密等接口。
 
-基本用法可以参考[Tests/目录](https://github.com/lovesoo/Taffy/tree/master/Tests)下示例demo.
+基本用法可以参考[Tests/](https://github.com/lovesoo/Taffy/tree/master/Tests)目录下示例demo.
 
 QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
-## 目录
+# 目录
 - [Taffy](#taffy)
-    - [0. 更新记录](#0-更新记录)
-    - [1. 运行环境](#1-运行环境)
-    - [2. 项目结构](#2-项目结构)
-    - [3. 环境部署](#3-环境部署)
-    - [4. 测试编写、执行及报告导出](#4-测试编写、执行及报告导出)
-    - [5.参考资料](#5参考资料)
-    - [6.联络方式](#6联络方式)
-    - [7. 附录](#7-附录)
-        - [7.1 locust框架集成使用说明](#71-locust框架集成使用说明)
-            - [7.1.1.Locust简介](#711locust简介)
-            - [7.1.2. 安装](#712-安装)
-            - [7.1.3. 使用方法](#713-使用方法)
-        - [7.2 nose编写测试用例方法](#72-nose编写测试用例方法)
-        - [7.3 Jenkins集成taffy进行自动化测试并输出测试报告](#73-jenkins集成taffy进行自动化测试并输出测试报告)
+- [0. 更新记录](#0-更新记录)
+- [1. 运行环境](#1-运行环境)
+- [2. 项目结构](#2-项目结构)
+- [3. 环境部署](#3-环境部署)
+    - [3.1 Python](#31-python)
+    - [3.2 IDE](#32-ide)
+    - [3.3 Lib](#33-lib)
+    - [3.4 PyCharm配置](#34-pycharm配置)
+- [4. 测试编写、执行及报告导出](#4-测试编写-执行及报告导出)
+    - [4.1 功能自动化测试](#41-功能自动化测试)
+        - [4.1.1 测试用例编写](#411-测试用例编写)
+        - [4.1.2 测试执行](#412-测试执行)
+        - [4.1.3 测试报告](#413-测试报告)
+    - [4.2 性能测试](#42-性能测试)
+        - [4.2.1 配置config/locust.yml](#421-配置configlocustyml)
+        - [4.2.2 运行locust](#422-运行locust)
+        - [4.2.3 测试报告](#423-测试报告)
+- [5. 参考资料](#5-参考资料)
+- [6. 联络方式](#6-联络方式)
+- [7. 附录](#7-附录)
+    - [7.1 locust框架集成使用说明](#71-locust框架集成使用说明)
+        - [7.1.1 简介](#711-简介)
+        - [7.1.2 安装](#712-安装)
+        - [7.1.3 使用](#713-使用)
+    - [7.2 nose编写测试用例方法](#72-nose编写测试用例方法)
+    - [7.3 Jenkins集成](#73-jenkins集成)
 
-## 0. 更新记录
+# 0. 更新记录
 
 20171030 v1.6 支持模块自定义配置安装，详见[**setup.py**](https://github.com/lovesoo/Taffy/blob/master/setup.py)
 
@@ -45,18 +57,18 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 20171009 v1.3 统一配置文件格式为YAML
 
-20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[**附录7-1**](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[**附录7-1**](#71-locust框架集成使用说明)
 
 20170922 v1.1 集成selenium，新增相关测试demo
 
 20170920 v1.0 第一个版本发布，支持http/hessian/webservice等类型接口功能自动化测试，并提供相关Util工具类
 
-## 1. 运行环境
+# 1. 运行环境
 - macOS，linux，windows
 - nose 1.3.7
 - python 2.7
 
-## 2. 项目结构
+# 2. 项目结构
 1) config 配置文件
 2) Tests 测试用例
 3) Util 工具类
@@ -72,156 +84,158 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
     - seleniumTool  selenium PageObject对象封装
     - webserviceTool    webservice接口调用
 
-## 3. 环境部署
-1) Python
+# 3. 环境部署
+## 3.1 Python
 
-    请下载安装Python2.7.x版本：
+请下载安装Python2.7.x版本：
 
-    ```
-    https://www.python.org/downloads/
-    ```
+```
+https://www.python.org/downloads/
+```
 
 
-2) IDE
+## 3.2 IDE
 
-    推荐使用PyCharm
+推荐使用PyCharm：
 
-    ```
-    官网地址：http://www.jetbrains.com/pycharm/
+```
+官网地址：http://www.jetbrains.com/pycharm/
 
-    下载安装完成后，注册时选择License server,输入：http://idea.imsxm.com
+下载安装完成后，注册时选择License server,输入：http://idea.imsxm.com
 
-    即可激活^^
-    ```
+即可激活^^
+```
 
 
-3) 第三方lib
+## 3.3 Lib
 
-    [requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以通过[setup.py](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行最大化、最小化及自定义模块安装配置：
+[requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以通过[setup.py](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行最大化、最小化及自定义模块安装配置：
 
-    ```
-    # 默认最大化安装（安装全部模块）
-    $ python setup.py
+```
+# 默认最大化安装（安装全部模块）
+$ python setup.py
 
-    # -m或--min，最小化安装（只安装必须的nose,requests,PyYAML等）
-    $ python setup.py -m
+# -m或--min，最小化安装（只安装必须的nose,requests,PyYAML等）
+$ python setup.py -m
 
-    # -w或--without A B，不安装模块A,B
-    # 示例：不安装db redis locust模块
-    $ python setup.py --without db redis locust
+# -w或--without A B，不安装模块A,B
+# 示例：不安装db redis locust模块
+$ python setup.py --without db redis locust
 
-    # --with A B,在最小化安装基础上，只安装模块A,B
-    # 示例：只安装db redis locust模块
-    $ python setup.py --with db redis locust
+# --with A B,在最小化安装基础上，只安装模块A,B
+# 示例：只安装db redis locust模块
+$ python setup.py --with db redis locust
 
-    # 其中，--with及--without选项支持的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
+# 其中，--with及--without选项支持的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
 
-    # -h或--help，查看帮助
-    $ python setup.py -h
-    ```
+# -h或--help，查看帮助
+$ python setup.py -h
+```
 
-    当默认最大化安装全部模块时，Windows系统下一些棘手的lib安装方法:
+当默认最大化安装全部模块时，Windows系统下一些棘手的lib安装方法:
 
-    1) mysql-python
+1) mysql-python
 
-        1) 首先安装Microsoft Visual C++ Compiler for Python 2.7：http://aka.ms/vcpython27
+    1) 首先安装Microsoft Visual C++ Compiler for Python 2.7：http://aka.ms/vcpython27
 
-        2) 然后下载msi包安装：https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/
+    2) 然后下载msi包安装：https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/
 
-    2) pymssql
+2) pymssql
 
-        可直接下载exe包安装: https://pypi.python.org/pypi/pymssql/2.1.1#downloads
+    可直接下载exe包安装: https://pypi.python.org/pypi/pymssql/2.1.1#downloads
 
-        python2.7+32位windows系统，请选择：pymssql-2.1.1.win32-py2.7.exe (md5)
+    python2.7+32位windows系统，请选择：pymssql-2.1.1.win32-py2.7.exe (md5)
 
-    3) webdriver
+3) webdriver
 
-        这里只说下chromedriver的下载配置方法：
-        1. 下载地址：https://sites.google.com/a/chromium.org/chromedriver/downloads
+    这里只说下chromedriver的下载配置方法：
+    1. 下载地址：https://sites.google.com/a/chromium.org/chromedriver/downloads
 
-        2. 下载chromedriver_win32.zip，解压后将chromedriver.exe放到Python安装路径下（如C:\Python27\）
+    2. 下载chromedriver_win32.zip，解压后将chromedriver.exe放到Python安装路径下（如C:\Python27\）
 
-4) PyCharm配置
+## 3.4 PyCharm配置
 
-    1) 运行PyCharm，打开下载的项目：taffy
+1) 运行PyCharm，打开下载的项目：taffy
 
-    2) 「File」–>「Settings 」–>「Project:Taffy」->「Project Interpreter」，配置Python interpreter为当前python版本安装目录
+2) 「File」–>「Settings 」–>「Project:Taffy」->「Project Interpreter」，配置Python interpreter为当前python版本安装目录
 
-    3) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，配置Default test runner为Nosetests
+3) 「File」–>「Settings 」–>「Tools」->「Python Integrated Tools」–>「Nosetests」，配置Default test runner为Nosetests
 
-    4) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
+4) 「Run」–>「Edit Configurations」–>「Defaults」->「Python」，配置Python interpreter为当前python版本安装目录
 
-    5)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
+5)  「Run」–>「Edit Configurations」–>「Defaults」->「Python tests」–>「Nosetests」，配置Python interpreter为当前python版本安装目录，并在Interpreter options中填入-s用以显示nose运行及调试信息
 
-## 4. 测试编写、执行及报告导出
-1) 功能自动化测试
+# 4. 测试编写、执行及报告导出
+## 4.1 功能自动化测试
 
-    1) 测试用例编写
+### 4.1.1 测试用例编写
 
-        taffy目前只支持nose方式编写测试用例，详见[附录7-2](https://github.com/lovesoo/Taffy#72-nose编写测试用例方法)
+taffy目前只支持nose方式编写测试用例，详见[附录7-2](#72-nose编写测试用例方法)
 
-        后续若有需求，可扩展支持其他方式，如以excel,csv,yaml等数据驱动形式保存用例
+后续若有需求，可扩展支持其他方式，如以excel,csv,yaml等数据驱动形式保存用例
 
-    2) 测试执行
+### 4.1.2 测试执行
 
-        可以使用两种方式执行功能自动化测试脚本：
+可以使用两种方式执行功能自动化测试脚本：
 
-        1) 图形用户界面GUI
+1) 图形用户界面GUI
 
-            在PyCharm中，选中测试文件，如Tests/test_demo.py
+    在PyCharm中，选中测试文件，如Tests/test_demo.py
 
-            鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
+    鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
 
-            注1：也可使用快捷键：Ctrl+Shift+F10
+    注1：也可使用快捷键：Ctrl+Shift+F10
 
-            注2：在脚本里使用快捷键Ctrl+Shift+F10，会单独执行选中的test class或test func
+    注2：在脚本里使用快捷键Ctrl+Shift+F10，会单独执行选中的test class或test func
 
-        2) 命令行界面CLI
+2) 命令行界面CLI
 
-            在PyCharm下方Terminal终端中，输入命令执行测试：
+在PyCharm下方Terminal终端中，输入命令执行测试：
 
-            ```
-            # 执行测试文件test_demo.py
-            $ nosetests -v Tests/test_demo.py
+```
+# 执行测试文件test_demo.py
+$ nosetests -v Tests/test_demo.py
 
-            # 单独执行测试文件test_demo.py中测试类test_demo下的test_http测试方法
-            $ nosetests -v Tests/test_demo.py:test_demo.test_http
-            ```
-            更多nosetests运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
+# 单独执行测试文件test_demo.py中测试类test_demo下的test_http测试方法
+$ nosetests -v Tests/test_demo.py:test_demo.test_http
+```
+更多nosetests运行选项，请参考[nostests官方文档](http://nose.readthedocs.io/en/latest/man.html)
 
-    3) 测试报告
+### 4.1.3 测试报告
 
-        功能自动化测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
+功能自动化测试执行完成后，在Pycharm左下方Run窗口的Testing toolbar中，选择“Export Test Results”按钮即可导出测试报告
 
-    详见[《PyCharm运行Nosetests并导出测试报告》](http://lovesoo.org/pycharm-run-nosetests-and-exports-test-report.html)
+详见[《PyCharm运行Nosetests并导出测试报告》](http://lovesoo.org/pycharm-run-nosetests-and-exports-test-report.html)
 
-2) 性能测试
+## 4.2 性能测试
 
-    1) 配置config/locust.yml
+### 4.2.1 配置config/locust.yml
 
-    2) 运行test_locust.py生成locustfile及执行性能测试，命令如下：
+### 4.2.2 运行locust
 
-    ```
-    $ cd Taffy\Tests
-    $ python test_locust.py
-    ```
+运行test_locust.py生成locustfile及执行性能测试，命令如下：
 
-    3) 测试报告
+```
+$ cd Taffy\Tests
+$ python test_locust.py
+```
 
-        1) 普通模式
+### 4.2.3 测试报告
 
-            locust以普通模式运行时，可在[web页面](http://localhost:8089/)实时查看运行结果，包括请求数，响应时间，RPS，失败率等
+1) 普通模式
 
-            测试执行完成后可在WEB页面下载CSV格式测试报告（选择Download Data -> Download response time distribution CSV）
+    locust以普通模式运行时，可在[web页面](http://localhost:8089/)实时查看运行结果，包括请求数，响应时间，RPS，失败率等
 
-        2) no-web模式
+    测试执行完成后可在WEB页面下载CSV格式测试报告（选择Download Data -> Download response time distribution CSV）
 
-            locust以no-web模式运行时，csv格式数据会定时保存在运行目录下，如locust_distribution.csv和locust_requests.csv
+2) no-web模式
 
-    Taffy集成locust性能测试框架使用说明，详见[附录7-1](https://github.com/lovesoo/Taffy#71-locust框架集成使用说明)
+    locust以no-web模式运行时，csv格式数据会定时保存在运行目录下，如locust_distribution.csv和locust_requests.csv
 
+Taffy集成locust性能测试框架使用说明，详见[附录7-1](#71-locust框架集成使用说明)
 
-## 5.参考资料
+
+# 5. 参考资料
 
 1. http://nose.readthedocs.io/en/latest/index.html
 
@@ -232,15 +246,15 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 4. http://www.cnblogs.com/yufeihlf/p/5764099.html
 
 
-## 6.联络方式
+# 6. 联络方式
 
 QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 
-## 7. 附录
+# 7. 附录
 
-### 7.1 locust框架集成使用说明
-#### 7.1.1.Locust简介
+## 7.1 locust框架集成使用说明
+### 7.1.1 简介
 Locust是使用Python语言编写实现的开源性能测试工具，简洁、轻量、高效，并发机制基于gevent协程，可以实现单机模拟生成较高的并发压力。
 
 官网：https://locust.io/
@@ -252,14 +266,14 @@ Locust是使用Python语言编写实现的开源性能测试工具，简洁、�
 4. 几乎可以测试任何系统，除了web http接口外，还可自定义clients测试其他类型系统
 
 
-#### 7.1.2. 安装
+### 7.1.2 安装
 可以使用pip快速安装Locust：
 
 ```
 pip install locustio
 ```
 
-#### 7.1.3. 使用方法
+### 7.1.3 使用
 taffy集成locust的基本流程如下：
 
 1) 配置config/locust.yml
@@ -371,7 +385,7 @@ taffy集成locust的基本流程如下：
 
     可以得出结论：**locust与jmeter性能测试结果基本一致。**
 
-### 7.2 nose编写测试用例方法
+## 7.2 nose编写测试用例方法
 
 nose会自动识别源文件，目录或包中的测试用例。
 
@@ -476,6 +490,6 @@ nose会自动识别源文件，目录或包中的测试用例。
 
     请注意，unittest.TestCase子类不支持Test generators方法。
 
-### 7.3 Jenkins集成taffy进行自动化测试并输出测试报告
+## 7.3 Jenkins集成
 
-详见：http://lovesoo.org/jenkins-integrated-taffy-for-automated-testing-and-output-test-reports.html
+《Jenkins集成taffy进行自动化测试并输出测试报告》详见：http://lovesoo.org/jenkins-integrated-taffy-for-automated-testing-and-output-test-reports.html
