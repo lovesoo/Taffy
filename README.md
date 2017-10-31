@@ -100,19 +100,21 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
     [requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以通过[setup.py](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行最大化、最小化及自定义模块安装配置：
 
     ```
-    # 默认最大化安装全部模块
+    # 默认最大化安装（安装全部模块）
     $ python setup.py
 
-    # -m或--min，最小化安装
+    # -m或--min，最小化安装（只安装必须的nose,requests,PyYAML等）
     $ python setup.py -m
 
     # -w或--without A B，不安装模块A,B
+    # 示例：不安装db redis locust模块
     $ python setup.py --without db redis locust
 
     # --with A B,在最小化安装基础上，只安装模块A,B
+    # 示例：只安装db redis locust模块
     $ python setup.py --with db redis locust
 
-    # --with及--without 支持配置的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
+    # 其中，--with及--without选项支持的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
 
     # -h或--help，查看帮助
     $ python setup.py -h
