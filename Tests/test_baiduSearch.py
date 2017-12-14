@@ -1,9 +1,8 @@
 # encoding: utf-8
-
 import requests
 import re
 from nose.tools import *
-
+from functools import partial
 
 class check_response():
     @staticmethod
@@ -53,6 +52,8 @@ class test_baiduSearch(object):
     def test_BVT(self):
         # 校验输入不同类型的wd时，百度是否均可正常搜索返回结果
         # wd分类：中文，英文，数字
-        wd_list = [u'lovesoo', u'软件测试', u'12345']
+        wd_list = [u'lovesoo', u'自动化测试', u'12345']
         for wd in wd_list:
-            yield test_baiduSearch.search, wd
+            f = partial(test_baiduSearch.search, wd)
+            f.description = wd.encode('utf-8')
+            yield (f,)
