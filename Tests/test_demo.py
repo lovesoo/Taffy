@@ -69,8 +69,8 @@ class test_demo(object):
     @nottest
     def test_db(self):
         # 数据库操作demo
-        print DBUtil.execute('select * from user_info limit 1;', database='user')
-        print DBUtil.execute('select * from user.dbo.user_info;', database='user', confSection='Sqlserver')
+        print DBUtil.execute('select * from user_info;')
+        print DBUtil.execute('select * from user_info;', confSection='Sqlserver')
 
     @nottest
     def test_OA(self):

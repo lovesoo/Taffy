@@ -18,7 +18,7 @@ class DBUtil(object):
         pass
 
     @classmethod
-    def getCon(cls, database, confSection, confFile='/config/test.yml'):
+    def getCon(cls, confSection, confFile='/config/test.yml'):
         """创建连接池，并从池中返回对应的数据库处理工具类
 
         :param confSection: 配置名
@@ -26,7 +26,7 @@ class DBUtil(object):
         :param database: 数据库名
         :type database: string
         """
-
+        database=ConfigUtil.get(confSection, 'Database', confFile)
         key = confSection + ':' + database
         clz = ''
 
@@ -69,7 +69,7 @@ class DBUtil(object):
         return clz(databasePool.connection())
 
     @classmethod
-    def execute(cls, sql, params=(), database='mysql', confSection='Mysql', confFile='/config/test.yml'):
+    def execute(cls, sql, params=(),confSection='Mysql', confFile='/config/test.yml'):
         """执行mysql语句，支持动态语法
 
         :param sql: mysql语句，动态语法时包含占位符%s
@@ -86,7 +86,7 @@ class DBUtil(object):
 
         try:
             data = []
-            instance = cls.getCon(database, confSection, confFile)
+            instance = cls.getCon(confSection, confFile)
             data = instance.execute(sql, params)
 
         except Exception as e:
