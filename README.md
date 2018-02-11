@@ -10,13 +10,13 @@ The basic useage can be found at Tests/ folder.
 
 Taffy是基于nosetests的自动化测试框架。
 
-Taffy主要用来测试后台服务(包括且不限于Http, Dubbo/hessian, Webservice, Socket等类型接口)，也可集成Selenium, Appium进行WEB或APP的自动化测试，或集成locust进行性能测试。
+Taffy主要用来测试后台服务(包含且不限于Http, Dubbo/hessian, Webservice, Socket等协议接口)、集成Selenium, Appium进行WEB或APP的自动化测试、或集成locust进行性能测试。
 
-Taffy封装实现了结果对比，配置读取，DB/Redis操作，数据加解密等接口。
+Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据加解密等接口。
 
-基本用法可以参考[Tests/](https://github.com/lovesoo/Taffy/tree/master/Tests)目录下示例demo.
+基本用法可以参考[Tests/](https://github.com/lovesoo/Taffy/tree/master/Tests)目录。
 
-QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
+欢迎加入QQ群交流讨论：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 # 目录
 - [Taffy](#taffy)
@@ -41,9 +41,6 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 - [6. 联络方式](#6-联络方式)
 - [7. 附录](#7-附录)
     - [7.1 locust框架集成使用说明](#71-locust框架集成使用说明)
-        - [7.1.1 简介](#711-简介)
-        - [7.1.2 安装](#712-安装)
-        - [7.1.3 使用](#713-使用)
     - [7.2 nose编写测试用例方法](#72-nose编写测试用例方法)
     - [7.3 Jenkins集成](#73-jenkins集成)
 
@@ -57,11 +54,11 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 
 20171009 v1.3 统一配置文件格式为YAML
 
-20170928 v1.2 集成locust，同一脚本可同时进行功能自动化及性能测试，详见[**附录7-1**](#71-locust框架集成使用说明)
+20170928 v1.2 集成locust，相同脚本可同时进行功能自动化及性能测试，详见[**附录7-1**](#71-locust框架集成使用说明)
 
 20170922 v1.1 集成selenium，新增相关测试demo
 
-20170920 v1.0 第一个版本发布，支持http/hessian/webservice等类型接口功能自动化测试，并提供相关Util工具类
+20170920 v1.0 发布第一个版本，支持http/hessian/webservice等类型接口功能自动化测试，并提供相关Util工具类
 
 # 1. 运行环境
 - macOS，linux，windows
@@ -72,17 +69,17 @@ QQ交流群：[25452556](https://jq.qq.com/?_wv=1027&k=5pqB0UV)
 1) config 配置文件
 2) Tests 测试用例
 3) Util 工具类
-    - checkTool 比较方法及结果校验
+    - checkTool 数据比较
     - commonTool    配置文件读取
-    - DBTool    数据库操作(mysql,sqlserver)
-    - hessianTool   hessian接口调用
-    - httpTool  http接口调用
-    - locustTool    locust性能框架
+    - DBTool    数据库操作
+    - hessianTool   hessian接口
+    - httpTool  http接口
+    - locustTool    locust集成
     - OATool    正交表设计测试用例
-    - redisTool redis操作（支持redis及redis cluster）
+    - redisTool redis操作（支持redis cluster）
     - securityTool  数据加解密
-    - seleniumTool  selenium PageObject对象封装
-    - webserviceTool    webservice接口调用
+    - seleniumTool  selenium集成
+    - webserviceTool    webservice接口
 
 # 3. 环境部署
 ## 3.1 Python
@@ -109,10 +106,17 @@ https://www.python.org/downloads/
 
 ## 3.3 Lib
 
-[requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以通过[setup.py](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行最大化、最小化及自定义模块安装配置：
+[requirements.txt ](https://github.com/lovesoo/Taffy/blob/master/requirements.txt)中存放了Taffy用到的第三方lib库，可以运行[` python setup.py`](https://github.com/lovesoo/Taffy/blob/master/setup.py)进行模块安装配置，命令如下：
 
 ```
-# 默认最大化安装（安装全部模块）
+# 默认安装全部模块
+$ python setup.py
+```
+
+详细用法如下：
+
+```
+# 默认安装全部模块
 $ python setup.py
 
 # -m或--min，最小化安装（只安装必须的nose,requests,PyYAML等）
@@ -132,7 +136,7 @@ $ python setup.py --with db redis locust
 $ python setup.py -h
 ```
 
-当默认最大化安装全部模块时，Windows系统下一些棘手的lib安装方法:
+Windows系统一些报错Lib安装方法:
 
 1) mysql-python
 
@@ -387,109 +391,8 @@ taffy集成locust的基本流程如下：
 
 ## 7.2 nose编写测试用例方法
 
-nose会自动识别源文件，目录或包中的测试用例。
-
-任何匹配testMatch正则表达式（默认为(?:^|[\\b_\\.-])[Tt]est，在一个单词的边界处或者紧跟-或_处有test或Test）的函数或类，并且所在的模块也匹配该表达式，都会被识别为测试并执行。
-
-出于对unittest兼容性的考虑，nose也支持继承unittest.TestCase的子类测试用例。与py.test类似，nose按照测试集在模块文件中出现的顺序执行功能测试。继承于TestCase的测试集和测试类按照字母表顺序执行。
-
-1) Fixtures
-
-    nose支持包，模块，类和函数例级别的Fixtures（setup和teardown方法，用以自动测试的初始化或者清理工作）
-
-2) Test packages
-
-    nose允许测试例以包的方式分组。
-
-    因此，也需要包级别的setup；比如，如果你想要创建一个数据库测试，你可能会想要在包setup时创建数据库，当每个测试结束之后运行包teardown时，销毁它。而不是在每一个测试模块或者测试例中创建和销毁数据库。
-
-    想要创建包级别的setup和teardown函数，你需要在测试包的_ init_.py 函数中定义setup和teardown函数。setup函数可以被命名为setup，setup_package，setUp，或者setUpPackage；teardown可以被命名为teardown,teardown_package, tearDown, 或者tearDownPackage。一旦第一个测试模块从测试包中被加载后，一个包中的测试例就开始执行。
-
-3) Test modules
-
-    Test modules是一个匹配testMatch的python模块。
-
-    测试模块提供模块级别的setup和teardown。可以定义setup, setup_module, setUp, setUpModule用于setup，teardown, teardown_module, tearDownModule用于teardown。一旦一个模块中所有的用例被收集完后，模块中的测试就开始执行。
-
-4) Test classes
-
-    Test classes是模块中定义的匹配testMatch或者继承unittest.TestCase的类。
-
-    所有的测试类以相同方式运行：通过testMatch匹配的找到类中的方法，并以全新的测试类实例运行测试方法。
-
-    像继承于unittest.TestCase的子类一样，测试类可以定义setUp tearDown函数，它们将会分别在每一个测试方法之前和之后运行。类级别setup fixture可以被命名为setup_class, setupClass, setUpClass, setupAll, setUpAll；teardown被命名为teardown_class, teardownClass, tearDownClass, teardownAll, tearDownAll, 类级别setup和teardown必须是类方法。
-
-5) Test functions
-
-    模块中任何匹配TestMatch的方法都将会被FunctionTestCase装饰，然后以用例的方式运行。最简单的失败和成功的用例如下：
-
-    ```
-    def test():
-        assert False
-    def test():
-        pass
-    ```
-
-    测试函数也可定义setup和teardown属性，它们将会在测试函数开始和结束的时候运行。还可以使用@with_setup装饰器，该方式尤其适用于在相同的模块中的许多方法需要相同的setup操作。
-
-    ```
-    def setup_func():
-        "set up test fixtures"
-
-    def teardown_func():
-        "tear down test fixtures"
-
-    @with_setup(setup_func, teardown_func)
-    def test():
-        "test ..."
-    ```
-
-6) Test generators
-
-    nose支持生成器测试函数和测试方法。如下：
-
-    ```
-    def test_evens():
-        for i in range(0, 5):
-            yield check_even, i, i*3
-
-    def check_even(n, nn):
-        assert n % 2 == 0 or nn % 2 == 0
-    ```
-    上述代码执行五次测试。nose生成迭代器，创建一个函数测试用例包，包装每一个yield tuple。
-
-    Test generators必须yield tuples,且第一个元素必须是可调用的函数，其他的元素作为参数传递。
-
-    Test generators测试用例默认名称是函数或方法的名字+参数。如果你想要显示不同的名称，可以设置yield函数的description属性。
-
-    Test generators中定义的setup和teardown函数仅仅会被执行一次。若想对于每一个yield的用例都执行，可将setup和teardown属性设置到被yield的函数中，或者yield一个带有setup和teardown属性的可调用对象的实例。
-
-    比如：
-
-    ```
-    @with_setup(setup_func, teardown_func)
-    def test_generator():
-        # ...
-        yield func, arg, arg # ...
-    ```
-    上面的例子中，setup和teardown只会被执行一次。与此相比：
-
-    ```
-    def test_generator():
-        # ...
-        yield func, arg, arg # ...
-
-    @with_setup(setup_func, teardown_func)
-    def func(arg):
-        assert something_about(arg)
-    ```
-
-    这个例子中，setup和teardown函数将会在每一次yield中执行。
-
-    对于生成器方法，class中的setUp和tearDown方法将会在每一个生成的测试用例之前或者之后运行。setUp和tearDown方法并不会在生成器方法本身 之前运行，这就导致在第一个用例运行之前setUp运行两次，之间却没有tearDown运行。
-
-    请注意，unittest.TestCase子类不支持Test generators方法。
+[《nose框架编写测试用例方法》](http://lovesoo.org/nose-writing-tests.html)
 
 ## 7.3 Jenkins集成
 
-《Jenkins集成taffy进行自动化测试并输出测试报告》详见：http://lovesoo.org/jenkins-integrated-taffy-for-automated-testing-and-output-test-reports.html
+[《Jenkins集成taffy进行自动化测试并输出测试报告》](http://lovesoo.org/jenkins-integrated-taffy-for-automated-testing-and-output-test-reports.html)
