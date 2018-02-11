@@ -10,7 +10,7 @@ The basic useage can be found at Tests/ folder.
 
 Taffy是基于nosetests的自动化测试框架。
 
-Taffy主要用来测试后台服务(包含且不限于Http, Dubbo/hessian, Webservice, Socket等协议接口)、集成Selenium, Appium进行WEB或APP的自动化测试、或集成locust进行性能测试。
+Taffy主要用来测试后台服务(包含且不限于Http, Dubbo/hessian, Webservice, Socket等协议接口)、也可集成Selenium, Appium进行WEB或APP的自动化测试、或集成locust进行性能测试。
 
 Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据加解密等接口。
 
