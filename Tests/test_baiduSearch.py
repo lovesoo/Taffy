@@ -3,6 +3,10 @@ import requests
 import re
 from nose.tools import *
 from functools import partial
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 class check_response():
     @staticmethod
@@ -55,5 +59,5 @@ class test_baiduSearch(object):
         wd_list = [u'lovesoo', u'自动化测试', u'12345']
         for wd in wd_list:
             f = partial(test_baiduSearch.search, wd)
-            f.description = wd.encode('utf-8')
+            f.description = 'search: %s' % wd
             yield (f,)
