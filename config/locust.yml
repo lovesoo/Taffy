@@ -16,9 +16,9 @@
   #r 每秒请求数
   #run_time 运行时间
 mode: 1
-no_web: 1
-min_wait: 100
-max_wait: 1000
+no_web: 0
+min_wait: 10
+max_wait: 100
 params:
   slaves_num: 4
   master_port: 5557

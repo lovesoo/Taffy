@@ -1,3 +1,1 @@
-# coding=utf-8
-
-from dbUtil import *
+# coding=utf-8from .dbUtil import *

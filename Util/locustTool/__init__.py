@@ -1,1 +1,1 @@
-from locustUtil import *
+from .locustUtil import *

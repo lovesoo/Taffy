@@ -1,3 +1,1 @@
-# coding=utf-8
-
-from OAT import *
+from .OAT import *

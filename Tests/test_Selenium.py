@@ -1,15 +1,10 @@
 # coding=utf-8
-
 import sys
 import os
-reload(sys)
-sys.setdefaultencoding("utf-8")
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-
 from Util import *
 from selenium import webdriver
 import time
-
 selenium_yml = '/config/selenium.yml'
 
 
@@ -36,7 +31,7 @@ class test_login(object):
     @staticmethod
     def login(self, user, passwd, tips=''):
         # 定义通用login方法
-        print 'Login user: %s ,passwd: %s' % (user, passwd)
+        print('Login user: %s ,passwd: %s' % (user, passwd))
         # 声明loginPage对象
         login_page = loginPage(self.driver, self.url, self.title)
         # 打开页面
@@ -52,11 +47,10 @@ class test_login(object):
         # 点击登录
         login_page.click_submit()
         time.sleep(1)
-
         if tips:
             # 登陆失败校验提示信息
             fail_tips = login_page.show_span()
-            print 'Login Failed: %s' % fail_tips
+            print('Login Failed: %s' % fail_tips)
             assert tips == fail_tips, 'Check Login Error Tips Failed!'
         else:
             # 登陆成功校验UserID
@@ -64,8 +58,7 @@ class test_login(object):
             # 点击退出
             login_page.click_logout()
             time.sleep(1)
-
-            print 'Login UserID: %s' % login_userID
+            print('Login UserID: %s' % login_userID)
             assert user + self.suffix == login_userID, 'Check UserID Failed!'
 
     def test_BVT(self):
@@ -79,5 +72,3 @@ class test_login(object):
     def test_Err_Passwd(self):
         # 测试用例：密码错误，登陆失败
         test_login.login(self, self.user, '123456', self.tips)
-
-

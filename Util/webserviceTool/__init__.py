@@ -1,1 +1,1 @@
-from webServiceUtil import *
+from .webServiceUtil import *

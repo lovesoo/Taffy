@@ -1,1 +1,1 @@
-from configUtil import *
+from .configUtil import *

@@ -10,9 +10,9 @@ The basic useage can be found at Tests/ folder.
 
 Taffy是基于nosetests的自动化测试框架。
 
-Taffy主要用来测试后台服务(包含且不限于Http, Dubbo/hessian, Webservice, Socket等协议接口)、也可集成Selenium, Appium进行WEB或APP的自动化测试、或集成locust进行性能测试。
+Taffy主要适用于服务端接口(包含且不限于Http, Dubbo/hessian, Webservice, Socket等协议)功能及性能自动化测试；也可集成Selenium, Appium进行WEB或APP的自动化测试。
 
-Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据加解密等接口。
+Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据加解密、正交表生成测试用例等工具类。
 
 基本用法可以参考[Tests/](https://github.com/lovesoo/Taffy/tree/master/Tests)目录。
 
@@ -46,6 +46,8 @@ Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据�
 
 # 0. 更新记录
 
+20181010 v1.7 Python 3.7版本适配，现已支持Python2.7 - 3.7
+
 20171030 v1.6 支持模块自定义配置安装，详见[**setup.py**](https://github.com/lovesoo/Taffy/blob/master/setup.py)
 
 20171015 v1.5 新增《[**Taffy入门教学视频**](http://v.youku.com/v_show/id_XMzA4NTk2MDI5Mg==.html)》
@@ -63,7 +65,7 @@ Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据�
 # 1. 运行环境
 - macOS，linux，windows
 - nose 1.3.7
-- python 2.7
+- python 2.7 - 3.7
 
 # 2. 项目结构
 1) config 配置文件
@@ -76,7 +78,7 @@ Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据�
     - httpTool  http接口
     - locustTool    locust集成
     - OATool    正交表设计测试用例
-    - redisTool redis操作（支持redis cluster）
+    - redisTool redis/redis cluster操作
     - securityTool  数据加解密
     - seleniumTool  selenium集成
     - webserviceTool    webservice接口
@@ -84,7 +86,7 @@ Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据�
 # 3. 环境部署
 ## 3.1 Python
 
-请下载安装Python2.7.x版本：
+请根据需要下载Python 2.7或3.7版本：
 
 ```
 https://www.python.org/downloads/
@@ -97,10 +99,6 @@ https://www.python.org/downloads/
 
 ```
 官网地址：http://www.jetbrains.com/pycharm/
-
-下载安装完成后，注册时选择License server,输入：http://idea.imsxm.com
-
-即可激活^^
 ```
 
 
@@ -111,51 +109,10 @@ https://www.python.org/downloads/
 ```
 # 默认安装全部模块
 $ python setup.py
-```
-
-详细用法如下：
-
-```
-# 默认安装全部模块
-$ python setup.py
-
-# -m或--min，最小化安装（只安装必须的nose,requests,PyYAML等）
-$ python setup.py -m
-
-# -w或--without A B，不安装模块A,B
-# 示例：不安装db redis locust模块
-$ python setup.py --without db redis locust
-
-# --with A B,在最小化安装基础上，只安装模块A,B
-# 示例：只安装db redis locust模块
-$ python setup.py --with db redis locust
-
-# 其中，--with及--without选项支持的模块列表为：[redis,security,db,webservice,selenium,locust,hessian]
 
 # -h或--help，查看帮助
 $ python setup.py -h
 ```
-
-Windows系统一些报错Lib安装方法:
-
-1) mysql-python
-
-    1) 首先安装Microsoft Visual C++ Compiler for Python 2.7：http://aka.ms/vcpython27
-
-    2) 然后下载msi包安装：https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/
-
-2) pymssql
-
-    可直接下载exe包安装: https://pypi.python.org/pypi/pymssql/2.1.1#downloads
-
-    python2.7+32位windows系统，请选择：pymssql-2.1.1.win32-py2.7.exe (md5)
-
-3) webdriver
-
-    这里只说下chromedriver的下载配置方法：
-    1. 下载地址：https://sites.google.com/a/chromium.org/chromedriver/downloads
-
-    2. 下载chromedriver_win32.zip，解压后将chromedriver.exe放到Python安装路径下（如C:\Python27\）
 
 ## 3.4 PyCharm配置
 
@@ -176,7 +133,7 @@ Windows系统一些报错Lib安装方法:
 
 taffy目前只支持nose方式编写测试用例，详见[附录7-2](#72-nose编写测试用例方法)
 
-后续若有需求，可扩展支持其他方式，如以excel,csv,yaml等数据驱动形式保存用例
+后续可扩展支持其他方式，如以excel,csv,yaml等数据驱动形式保存用例
 
 ### 4.1.2 测试执行
 

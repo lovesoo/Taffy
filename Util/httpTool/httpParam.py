@@ -1,5 +1,4 @@
 # coding=utf-8
-
 import json
 from ..commonTool import *
 
@@ -8,7 +7,7 @@ class HttpParam(object):
     """接口参数构造类，一般分为base,param,data等几部分，格式为json或xml"""
 
     def __init__(self, **kwargs):
-        """构造函数.
+        """构造函数
         :param 为key=value的形式
         """
         self.data = {
