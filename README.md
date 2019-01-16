@@ -86,21 +86,11 @@ Taffy同时封装实现了配置读取、数据对比、DB/Redis操作、数据�
 # 3. 环境部署
 ## 3.1 Python
 
-请根据需要下载Python 2.7或3.7版本：
-
-```
-https://www.python.org/downloads/
-```
-
+请根据需要下载Python 2.7或3.7版本：https://www.python.org/downloads/
 
 ## 3.2 IDE
 
-推荐使用PyCharm：
-
-```
-http://www.jetbrains.com/pycharm/
-```
-
+推荐使用PyCharm：http://www.jetbrains.com/pycharm/
 
 ## 3.3 Lib
 
