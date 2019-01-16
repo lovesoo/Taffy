@@ -98,7 +98,7 @@ https://www.python.org/downloads/
 推荐使用PyCharm：
 
 ```
-官网地址：http://www.jetbrains.com/pycharm/
+http://www.jetbrains.com/pycharm/
 ```
 
 
@@ -145,9 +145,7 @@ taffy目前只支持nose方式编写测试用例，详见[附录7-2](#72-nose编
 
     鼠标右键选择Run 'Nosetests in test_demo.py'即可执行测试
 
-    注1：也可使用快捷键：Ctrl+Shift+F10
-
-    注2：在脚本里使用快捷键Ctrl+Shift+F10，会单独执行选中的test class或test func
+    快捷键：Ctrl+Shift+F10，在脚本中使用会单独执行选中的test class或func
 
 2) 命令行界面CLI
 
